@@ -250,14 +250,199 @@
     /* COVER RULE */
     .crule { width: 48px; height: 1px; background: var(--gold); margin: 24px auto; opacity: .45; }
 
-    /* responsive */
-    @media(max-width:900px){
-      .slide{padding:48px 36px;}
-      .org-line{left:36px;right:36px;}
-      .kpi-grid,.stat-row{grid-template-columns:repeat(2,1fr);}
-      .mod-list,.prob-grid,.resp-grid,.steps-grid{grid-template-columns:1fr;}
-      .meth-grid{grid-template-columns:repeat(2,1fr);}
-      .ur{grid-template-columns:140px 32px 1fr;}
+    /* ════════════════════════════════════
+       RESPONSIVE & MOBILE OPTIMIZATION
+    ════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .slide { padding: 56px 36px 72px; }
+      .org-line { left: 36px; right: 36px; }
+      .kpi-grid, .stat-row { grid-template-columns: repeat(2, 1fr); }
+      .mod-list, .prob-grid, .resp-grid, .steps-grid { grid-template-columns: 1fr; }
+      .meth-grid { grid-template-columns: repeat(2, 1fr); }
+      .ur { grid-template-columns: 140px 32px 1fr; }
+      #hint { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      html, body {
+        height: 100%;
+        height: 100dvh;
+        overflow: hidden;
+      }
+      #deck {
+        height: 100%;
+        height: 100dvh;
+      }
+      .slide {
+        padding: 68px 20px 88px !important;
+        justify-content: flex-start !important;
+        align-items: stretch !important;
+        overflow-y: auto !important;
+        -webkit-overflow-scrolling: touch;
+      }
+      .slide.centered {
+        justify-content: center !important;
+        align-items: center !important;
+        text-align: center !important;
+      }
+      @media (max-height: 640px) {
+        .slide.centered {
+          justify-content: flex-start !important;
+        }
+      }
+
+      /* Mobile Typography */
+      body { font-size: 15px !important; }
+      h1.cover-h {
+        font-size: clamp(2rem, 8vw, 2.7rem) !important;
+        line-height: 1.22 !important;
+      }
+      h2.sh {
+        font-size: clamp(1.55rem, 6.2vw, 2.15rem) !important;
+        line-height: 1.25 !important;
+        margin-bottom: 12px !important;
+      }
+      .eyebrow {
+        font-size: 0.78rem !important;
+        letter-spacing: .15em !important;
+        margin-bottom: 10px !important;
+      }
+      .lead {
+        font-size: 0.96rem !important;
+        line-height: 1.68 !important;
+        margin-bottom: 16px !important;
+      }
+      .cover-sub {
+        font-size: 0.94rem !important;
+        line-height: 1.65 !important;
+        margin: 0 auto 20px !important;
+      }
+      .crule {
+        margin: 16px auto !important;
+      }
+
+      /* Cards & Problem Grid */
+      .prob-grid {
+        grid-template-columns: 1fr !important;
+        gap: 14px !important;
+        margin-top: 16px !important;
+      }
+      .prob-card {
+        padding: 4px 0 4px 14px !important;
+      }
+      .prob-num {
+        font-size: 0.65rem !important;
+        margin-bottom: 3px !important;
+      }
+      .prob-title {
+        font-size: 0.92rem !important;
+        margin-bottom: 4px !important;
+      }
+      .prob-desc {
+        font-size: 0.82rem !important;
+        line-height: 1.62 !important;
+      }
+
+      /* Timeline */
+      .timeline, .tl {
+        width: 100% !important;
+        margin-top: 16px !important;
+      }
+      .tl-item {
+        grid-template-columns: 1px 1fr !important;
+        gap: 0 16px !important;
+        padding-bottom: 16px !important;
+      }
+      .tl-title {
+        font-size: 0.92rem !important;
+        margin-bottom: 4px !important;
+      }
+      .tl-desc {
+        font-size: 0.82rem !important;
+        line-height: 1.62 !important;
+      }
+
+      /* Slide 5 column fix */
+      #s2b .tl {
+        columns: 1 !important;
+        column-gap: 0 !important;
+      }
+      #s2b .tl-item {
+        padding-bottom: 16px !important;
+      }
+
+      /* Live CTA Button */
+      .cta-btn {
+        display: flex !important;
+        width: 100% !important;
+        justify-content: center !important;
+        text-align: center !important;
+        padding: 13px 18px !important;
+        font-size: 0.9rem !important;
+        margin-top: 18px !important;
+      }
+
+      /* Org Line - Static flow on mobile prevents fixed overlap */
+      .org-line {
+        position: static !important;
+        width: 100% !important;
+        margin-top: 24px !important;
+        padding-bottom: 8px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        gap: 6px !important;
+        font-size: 0.64rem !important;
+        text-align: center !important;
+      }
+      .org-line .sep { display: none !important; }
+
+      /* Top Language Selector */
+      #lang {
+        top: 12px !important;
+        right: 12px !important;
+      }
+      .lb {
+        padding: 5px 12px !important;
+        font-size: 0.72rem !important;
+      }
+
+      /* Bottom Navigation Bar */
+      #nav {
+        bottom: 10px !important;
+        padding: 6px 12px !important;
+        gap: 8px !important;
+        border-radius: 20px !important;
+        max-width: calc(100vw - 20px) !important;
+      }
+      .nav-btn {
+        font-size: 0.78rem !important;
+        padding: 5px 8px !important;
+      }
+      #slide-ctr {
+        font-size: 0.72rem !important;
+        min-width: 38px !important;
+      }
+      .dot {
+        width: 5px !important;
+        height: 5px !important;
+      }
+      #hint { display: none !important; }
+    }
+
+    @media (max-width: 420px) {
+      .slide {
+        padding: 62px 16px 80px !important;
+      }
+      h1.cover-h {
+        font-size: 1.9rem !important;
+      }
+      h2.sh {
+        font-size: 1.45rem !important;
+      }
+      .dot-row {
+        display: none !important;
+      }
     }
   </style>
 </head>
@@ -599,13 +784,15 @@
 </div>
 
 <style>
-  body { font-size: 20px !important; }
-  .sh { font-size: 3em !important; }
-  .eyebrow { font-size: 1.2em !important; }
-  .lead { font-size: 1.5em !important; }
-  .meth-name, .step-title { font-size: 1.4em !important; }
-  .meth-desc, .step-desc { font-size: 1.2em !important; }
-  .stat-val { font-size: 2.5em !important; }
+  @media (min-width: 901px) {
+    body { font-size: 20px !important; }
+    .sh { font-size: 3em !important; }
+    .eyebrow { font-size: 1.2em !important; }
+    .lead { font-size: 1.5em !important; }
+    .meth-name, .step-title { font-size: 1.4em !important; }
+    .meth-desc, .step-desc { font-size: 1.2em !important; }
+    .stat-val { font-size: 2.5em !important; }
+  }
 </style>
 
 <script>
@@ -635,6 +822,7 @@ function goTo(idx) {
   animating = true;
   slides[cur].classList.remove('active');
   slides[idx].classList.add('active');
+  slides[idx].scrollTop = 0; // Reset scroll position on mobile
   cur = idx; ui();
   // trigger animations
   if (cur === 6) setTimeout(() => { document.querySelectorAll('#s6 .ur-fill').forEach(el => el.style.width = el.dataset.w); }, 260);
@@ -652,9 +840,21 @@ document.addEventListener('keydown', e => {
   if (e.key==='ArrowLeft'){e.preventDefault();prev();}
   if (e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}
 });
-let tx=0;
-document.addEventListener('touchstart', e=>tx=e.touches[0].clientX,{passive:true});
-document.addEventListener('touchend',   e=>{const dx=e.changedTouches[0].clientX-tx;if(Math.abs(dx)>40){dx<0?next():prev();}});
+
+let tx = 0, ty = 0;
+document.addEventListener('touchstart', e => {
+  tx = e.touches[0].clientX;
+  ty = e.touches[0].clientY;
+}, {passive:true});
+
+document.addEventListener('touchend', e => {
+  const dx = e.changedTouches[0].clientX - tx;
+  const dy = e.changedTouches[0].clientY - ty;
+  // Swipe only if horizontal movement is dominant (prevents misfire during vertical scroll)
+  if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.4) {
+    dx < 0 ? next() : prev();
+  }
+}, {passive:true});
 ui();
 
 /* ── LANGUAGE TOGGLE ── */
