@@ -183,15 +183,15 @@
     /* ════════════════════════════════════
        TIMELINE (El Origen)
     ════════════════════════════════════ */
-    .timeline { width: 100%; max-width: 860px; margin-top: 26px; display: flex; flex-direction: column; gap: 0; }
-    .tl-item { display: grid; grid-template-columns: 1px 1fr; gap: 0 22px; padding-bottom: 22px; }
+    .timeline { width: 100%; max-width: 960px; margin-top: 28px; display: flex; flex-direction: column; gap: 0; }
+    .tl-item { display: grid; grid-template-columns: 1px 1fr; gap: 0 24px; padding-bottom: 26px; }
     .tl-item:last-child { padding-bottom: 0; }
     .tl-year { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--gold2); text-align: right; padding-top: 2px; }
     .tl-line { background: var(--line); position: relative; }
-    .tl-line::before { content: ''; position: absolute; top: 7px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--gold); border: 2px solid var(--navy2); }
-    .tl-content { padding-left: 6px; }
-    .tl-title { font-size: 1.10rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
-    .tl-desc  { font-size: 0.94rem; color: #b8c8df; line-height: 1.74; }
+    .tl-line::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 9px; height: 9px; border-radius: 50%; background: var(--gold); border: 2px solid var(--navy2); }
+    .tl-content { padding-left: 8px; }
+    .tl-title { font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .tl-desc  { font-size: 1.06rem; color: #c4d4ec; line-height: 1.78; }
 
     /* ════════════════════════════════════
        PHOTO SLIDE (Slide 2: El Primer Encuentro)
@@ -1360,6 +1360,17 @@
     .meth-name, .step-title { font-size: 1.4em !important; }
     .meth-desc, .step-desc { font-size: 1.2em !important; }
     .stat-val { font-size: 2.5em !important; }
+
+    /* Timeline presentation readability on desktop/projector */
+    #s2c .tl { max-width: 1080px !important; margin-top: 32px !important; }
+    #s2c .tl-item { gap: 0 28px !important; padding-bottom: 36px !important; }
+    #s2c .tl-title { font-size: 1.45em !important; margin-bottom: 12px !important; color: #ffffff !important; }
+    #s2c .tl-desc { font-size: 1.2em !important; line-height: 1.82 !important; color: #d4e2f6 !important; }
+    #s2c .tl-line::before { width: 11px !important; height: 11px !important; top: 10px !important; }
+
+    #s2b .tl { max-width: 1160px !important; }
+    #s2b .tl-title { font-size: 1.22em !important; margin-bottom: 6px !important; }
+    #s2b .tl-desc { font-size: 1.02em !important; line-height: 1.68 !important; color: #c4d6ec !important; }
   }
 </style>
 
