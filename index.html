@@ -379,11 +379,11 @@
     /* ════════════════════════════════════
        PROBLEM CARDS (2-col list)
     ════════════════════════════════════ */
-    .prob-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px 36px; width: 100%; max-width: 1040px; margin-top: 22px; }
-    .prob-card { border-left: 2px solid var(--gold); padding: 6px 0 6px 20px; }
-    .prob-num  { font-size: .84rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold2); margin-bottom: 6px; }
-    .prob-title{ font-size: 1.25rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
-    .prob-desc { font-size: 1.05rem; color: #c4d4ec; line-height: 1.76; }
+    .prob-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 32px; width: 100%; max-width: 1040px; margin-top: 14px; }
+    .prob-card { border-left: 2px solid var(--gold); padding: 3px 0 3px 18px; }
+    .prob-num  { font-size: .80rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold2); margin-bottom: 4px; }
+    .prob-title{ font-size: 1.15rem; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+    .prob-desc { font-size: 0.96rem; color: #c4d4ec; line-height: 1.66; }
 
     /* ════════════════════════════════════
        RESPONSE / DECISION (2-col)
@@ -1361,12 +1361,14 @@
     .meth-desc, .step-desc { font-size: 1.2em !important; }
     .stat-val { font-size: 2.5em !important; }
 
-    /* Problem cards readability on desktop/projector (Slide 7) */
-    .prob-grid { max-width: 1180px !important; gap: 28px 48px !important; margin-top: 28px !important; }
-    .prob-card { border-left-width: 3px !important; padding: 6px 0 6px 22px !important; }
-    .prob-num { font-size: 0.95em !important; margin-bottom: 8px !important; }
-    .prob-title { font-size: 1.38em !important; margin-bottom: 10px !important; color: #ffffff !important; }
-    .prob-desc { font-size: 1.15em !important; line-height: 1.78 !important; color: #d4e2f6 !important; }
+    /* Slide 7 compact balanced layout (prevents vertical overflow) */
+    #s2 .sh { font-size: 2.2em !important; margin-bottom: 8px !important; }
+    #s2 .lead { font-size: 1.15em !important; margin-bottom: 10px !important; }
+    #s2 .prob-grid { max-width: 1140px !important; gap: 14px 40px !important; margin-top: 10px !important; }
+    #s2 .prob-card { border-left-width: 2.5px !important; padding: 2px 0 2px 18px !important; }
+    #s2 .prob-num { font-size: 0.78em !important; margin-bottom: 3px !important; }
+    #s2 .prob-title { font-size: 1.18em !important; margin-bottom: 4px !important; color: #ffffff !important; }
+    #s2 .prob-desc { font-size: 0.96em !important; line-height: 1.62 !important; color: #d4e2f6 !important; }
 
     /* Timeline presentation readability on desktop/projector */
     #s2c .tl { max-width: 1080px !important; margin-top: 32px !important; }
