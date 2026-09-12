@@ -30,13 +30,13 @@
     .slide {
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start;
-      padding: 76px 116px;
+      justify-content: flex-start; align-items: flex-start;
+      padding: 72px 116px 60px;
       opacity: 0; transition: opacity .5s ease;
       pointer-events: none;
     }
     .slide.active { opacity: 1; pointer-events: all; }
-    .slide.centered { align-items: center; text-align: center; }
+    .slide.centered { justify-content: center; align-items: center; text-align: center; }
 
     /* ── BACKGROUNDS ── */
     .bg-a {
@@ -65,17 +65,84 @@
     #nav { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; background: rgba(11,22,40,.92); backdrop-filter: blur(16px); border: 1px solid var(--line); border-radius: 5px; padding: 7px 16px; z-index: 200; }
     .nav-btn { background: none; border: none; color: var(--muted); font-size: .8rem; font-weight: 600; letter-spacing: .05em; cursor: pointer; padding: 4px 8px; transition: color .2s; font-family: 'Inter', sans-serif; }
     .nav-btn:hover { color: var(--gold2); }
+    .fs-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--gold2) !important;
+      padding: 5px 12px !important;
+      border-radius: 5px;
+      background: rgba(201,168,76,.18);
+      border: 1px solid rgba(201,168,76,.45) !important;
+      font-weight: 700;
+      transition: all .2s ease;
+      cursor: pointer;
+    }
+    .fs-btn:hover {
+      background: rgba(201,168,76,.32) !important;
+      color: var(--white) !important;
+      border-color: var(--gold2) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(201,168,76,.25);
+    }
+    .fs-icon { font-size: 1.05rem; line-height: 1; }
     #slide-ctr { font-size: .7rem; color: var(--dim); font-weight: 500; min-width: 44px; text-align: center; }
     .vsep { width: 1px; height: 14px; background: var(--line); }
     .dot-row { display: flex; gap: 5px; align-items: center; }
     .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--dim); cursor: pointer; transition: background .3s, transform .3s; }
     .dot.on { background: var(--gold); transform: scale(1.5); }
 
-    /* ── LANGUAGE TOGGLE ── */
-    #lang { position: fixed; top: 22px; right: 28px; display: flex; background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; z-index: 300; }
-    .lb { padding: 6px 15px; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: var(--muted); background: none; border: none; cursor: pointer; transition: background .25s, color .25s; }
+    /* ── LANGUAGE TOGGLE (Inside Bottom Nav) ── */
+    #lang {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(201, 168, 76, .25);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .lb {
+      padding: 4px 9px;
+      font-family: 'Inter', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
     .lb.on { background: var(--gold); color: var(--navy); }
-    .lb:hover:not(.on) { background: rgba(255,255,255,.06); color: var(--white); }
+    .lb:hover:not(.on) { background: rgba(255, 255, 255, .08); color: var(--white); }
+
+    /* ── TOP-RIGHT LATIDOS LOGO ── */
+    #top-logo {
+      position: fixed;
+      top: 18px;
+      right: 28px;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    #top-logo:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(201, 168, 76, 0.3);
+      background: #ffffff;
+    }
+    #top-logo img {
+      height: 38px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
 
     /* ── HINT ── */
     #hint { position: fixed; bottom: 58px; right: 28px; font-size: .66rem; color: var(--dim); text-align: right; line-height: 2; letter-spacing: .04em; }
@@ -83,12 +150,31 @@
     /* ════════════════════════════════════
        TYPOGRAPHY
     ════════════════════════════════════ */
-    .eyebrow { font-size: .92rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .eyebrow { font-size: .98rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
     .eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--gold); opacity: .55; }
     h1.cover-h { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 5vw, 5.2rem); font-weight: 700; line-height: 1.18; letter-spacing: -.01em; }
     h2.sh { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 3.8vw, 3.9rem); font-weight: 700; line-height: 1.2; letter-spacing: -.01em; margin-bottom: 18px; }
     .gold { color: var(--gold2); }
-    .lead { font-size: 1.28rem; font-weight: 400; color: var(--muted); line-height: 1.82; max-width: 660px; }
+    .lead { font-size: 1.28rem; font-weight: 400; color: var(--muted); line-height: 1.82; max-width: 960px; margin-bottom: 20px; }
+    .placeholder-box {
+      width: 100%;
+      max-width: 1400px;
+      height: clamp(300px, 48vh, 500px);
+      margin-top: 8px;
+      border: 2px dashed rgba(201, 168, 76, 0.35);
+      border-radius: 8px;
+      background: rgba(201, 168, 76, 0.03);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: var(--gold2);
+      transition: border-color .3s;
+    }
+    .placeholder-icon { font-size: 2.8rem; opacity: 0.75; }
+    .placeholder-title { font-size: 1.15rem; font-weight: 600; letter-spacing: .02em; color: var(--white); }
+    .placeholder-sub { font-size: 0.95rem; color: var(--muted); max-width: 680px; text-align: center; line-height: 1.6; }
     .divider { width: 44px; height: 1px; background: var(--gold); opacity: .45; margin: 22px 0; }
     .cover-sub { font-size: 1.12rem; color: var(--muted); line-height: 1.88; max-width: 580px; margin: 0 auto 28px; }
     .cover-tags { display: flex; gap: 9px; flex-wrap: wrap; justify-content: center; }
@@ -97,24 +183,207 @@
     /* ════════════════════════════════════
        TIMELINE (El Origen)
     ════════════════════════════════════ */
-    .timeline { width: 100%; max-width: 840px; margin-top: 30px; display: flex; flex-direction: column; gap: 0; }
-    .tl-item { display: grid; grid-template-columns: 1px 1fr; gap: 0 20px; padding-bottom: 24px; }
+    .timeline { width: 100%; max-width: 860px; margin-top: 26px; display: flex; flex-direction: column; gap: 0; }
+    .tl-item { display: grid; grid-template-columns: 1px 1fr; gap: 0 22px; padding-bottom: 22px; }
     .tl-item:last-child { padding-bottom: 0; }
-    .tl-year { font-family: 'Playfair Display', serif; font-size: .9rem; font-weight: 700; color: var(--gold2); text-align: right; padding-top: 2px; }
+    .tl-year { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--gold2); text-align: right; padding-top: 2px; }
     .tl-line { background: var(--line); position: relative; }
-    .tl-line::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 7px; height: 7px; border-radius: 50%; background: var(--gold); border: 2px solid var(--navy2); }
-    .tl-content { padding-left: 4px; }
-    .tl-title { font-size: .92rem; font-weight: 700; color: var(--white); margin-bottom: 5px; }
-    .tl-desc  { font-size: .8rem; color: var(--muted); line-height: 1.72; }
+    .tl-line::before { content: ''; position: absolute; top: 7px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--gold); border: 2px solid var(--navy2); }
+    .tl-content { padding-left: 6px; }
+    .tl-title { font-size: 1.10rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .tl-desc  { font-size: 0.94rem; color: #b8c8df; line-height: 1.74; }
+
+    /* ════════════════════════════════════
+       PHOTO SLIDE (Slide 2: El Primer Encuentro)
+    ════════════════════════════════════ */
+    .photo-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      width: 100%;
+      max-width: 1540px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+    .photo-card-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid rgba(201, 168, 76, 0.35);
+      border-radius: 12px;
+      padding: 10px;
+      cursor: pointer;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .photo-card-item:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201, 168, 76, 0.85);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 24px rgba(201, 168, 76, 0.3);
+    }
+    .photo-card-item.featured {
+      border-color: rgba(201, 168, 76, 0.6);
+      background: rgba(201, 168, 76, 0.05);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5), 0 0 16px rgba(201, 168, 76, 0.2);
+    }
+    .photo-wrap {
+      position: relative;
+      width: 100%;
+      height: clamp(340px, 54vh, 560px);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--navy2);
+    }
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .photo-card-item:hover .photo-wrap img {
+      transform: scale(1.04);
+    }
+    .photo-overlay-tag {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: rgba(11, 22, 40, 0.88);
+      backdrop-filter: blur(8px);
+      color: var(--gold3);
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+    .photo-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-top: 12px;
+      text-align: center;
+    }
+    .photo-grid-2 {
+      display: grid;
+      grid-template-columns: 1.22fr 0.98fr;
+      gap: 28px;
+      width: 100%;
+      max-width: 1460px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+    .photo-wrap-app {
+      background: radial-gradient(circle at 50% 35%, rgba(201, 168, 76, 0.12) 0%, rgba(15, 30, 56, 0.92) 60%, rgba(11, 22, 40, 0.98) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-wrap-app img.app-screenshot {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 10px 0;
+      filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.65));
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .photo-card-item:hover .photo-wrap-app img.app-screenshot {
+      transform: scale(1.03);
+    }
+    @media (max-width: 900px) {
+      .photo-grid-2, .photo-grid-3 {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .photo-wrap { height: 210px; }
+    }
+
+    /* ── PHOTO LIGHTBOX MODAL ── */
+    .photo-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(6,12,24,.88);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      padding: 24px;
+    }
+    .photo-modal.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(15,30,56,.95);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.7);
+    }
+    .modal-content img {
+      max-width: 86vw;
+      max-height: 76vh;
+      object-fit: contain;
+      border-radius: 4px;
+      display: block;
+    }
+    .modal-caption {
+      margin-top: 10px;
+      font-size: .88rem;
+      color: var(--gold2);
+      font-weight: 500;
+      text-align: center;
+    }
+    .modal-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,.4);
+    }
+    @media (max-width: 900px) {
+      .s1-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .s1-photo-hero { height: 160px; }
+      .s1-photo-sub { height: 130px; }
+    }
 
     /* ════════════════════════════════════
        PROBLEM CARDS (2-col list)
     ════════════════════════════════════ */
-    .prob-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 840px; margin-top: 28px; }
-    .prob-card { border-left: 2px solid rgba(201,168,76,.35); padding: 4px 0 4px 18px; }
-    .prob-num  { font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-    .prob-title{ font-size: .92rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
-    .prob-desc { font-size: .8rem; color: var(--muted); line-height: 1.72; }
+    .prob-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 26px; width: 100%; max-width: 880px; margin-top: 20px; }
+    .prob-card { border-left: 2px solid rgba(201,168,76,.4); padding: 4px 0 4px 18px; }
+    .prob-num  { font-size: .78rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .prob-title{ font-size: 1.10rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .prob-desc { font-size: 0.94rem; color: #b8c8df; line-height: 1.74; }
 
     /* ════════════════════════════════════
        RESPONSE / DECISION (2-col)
@@ -242,10 +511,10 @@
     .fn-tag-label { font-size: .82rem; font-weight: 600; color: var(--white); }
 
     /* PLATFORM CTA BUTTON */
-    .cta-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; padding: 13px 28px; background: linear-gradient(135deg, rgba(201,168,76,.15), rgba(201,168,76,.05)); border: 1px solid rgba(201,168,76,.4); border-radius: 4px; text-decoration: none; color: var(--gold3); font-family: 'Inter', sans-serif; font-size: .92rem; font-weight: 600; letter-spacing: .03em; transition: all .2s; }
-    .cta-btn:hover { background: rgba(201,168,76,.2); border-color: rgba(201,168,76,.7); color: var(--gold); }
-    .cta-btn-icon { font-size: 1.1rem; }
-    .cta-btn-url { font-size: .78rem; color: var(--muted); font-weight: 400; margin-left: 4px; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 12px; margin-top: 22px; padding: 13px 30px; background: linear-gradient(135deg, rgba(201,168,76,.2), rgba(201,168,76,.06)); border: 1.5px solid rgba(201,168,76,.45); border-radius: 6px; text-decoration: none; color: var(--gold3); font-family: 'Inter', sans-serif; font-size: 1.02rem; font-weight: 600; letter-spacing: .03em; transition: all .2s; }
+    .cta-btn:hover { background: rgba(201,168,76,.28); border-color: rgba(201,168,76,.8); color: #ffffff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .cta-btn-icon { font-size: 1.2rem; }
+    .cta-btn-url { font-size: .84rem; color: #b8c8df; font-weight: 400; margin-left: 6px; }
 
     /* COVER RULE */
     .crule { width: 48px; height: 1px; background: var(--gold); margin: 24px auto; opacity: .45; }
@@ -397,23 +666,27 @@
       }
       .org-line .sep { display: none !important; }
 
-      /* Top Language Selector */
-      #lang {
-        top: 12px !important;
+      /* Top-Right Logo */
+      #top-logo {
+        top: 10px !important;
         right: 12px !important;
+        padding: 3px 8px !important;
       }
-      .lb {
-        padding: 5px 12px !important;
-        font-size: 0.72rem !important;
+      #top-logo img {
+        height: 24px !important;
       }
 
       /* Bottom Navigation Bar */
       #nav {
-        bottom: 10px !important;
-        padding: 6px 12px !important;
-        gap: 8px !important;
+        bottom: 8px !important;
+        padding: 5px 10px !important;
+        gap: 6px !important;
         border-radius: 20px !important;
-        max-width: calc(100vw - 20px) !important;
+        max-width: calc(100vw - 16px) !important;
+      }
+      .lb {
+        padding: 3px 6px !important;
+        font-size: 0.65rem !important;
       }
       .nav-btn {
         font-size: 0.78rem !important;
@@ -449,7 +722,11 @@
 <body>
 
 <div id="prog-wrap"><div id="prog-fill"></div></div>
-<div id="lang"><button class="lb on" onclick="setLang('es')">ES</button><button class="lb" onclick="setLang('en')">EN</button><button class="lb" onclick="setLang('ko')">KO</button></div>
+
+<!-- TOP RIGHT LATIDOS LOGO -->
+<div id="top-logo" title="Fundación Latidos">
+  <img src="images/latidos-logo.png" alt="Fundación Latidos" />
+</div>
 
 <div id="deck">
 
@@ -459,165 +736,382 @@
 <div class="slide bg-a centered active" id="s0">
   <div class="top-bar"></div>
   <p class="eyebrow" style="justify-content:center">
-    <span class="t" data-es="Reunión — Asamblea Fundación Latidos" data-en="Meeting — Fundación Latidos Assembly">Reunión — Asamblea Fundación Latidos</span>
+    <span class="t" data-es="Reunión — Asamblea Fundación Latidos" data-en="Meeting — Fundación Latidos Assembly" data-ko="재단 총회 — Fundación Latidos 총회">Reunión — Asamblea Fundación Latidos</span>
   </p>
   <h1 class="cover-h">
-    <span class="t" data-es="Presentación del Nuevo" data-en="Presentation of the New">Presentación del Nuevo</span><br/>
-    <span class="gold t" data-es="Sistema de Gestión" data-en="Management System">Sistema de Gestión</span>
+    <span class="t" data-es="Presentación del Nuevo" data-en="Presentation of the New" data-ko="새로운 시스템 발표">Presentación del Nuevo</span><br/>
+    <span class="gold t" data-es="Sistema de Gestión" data-en="Management System" data-ko="관리 플랫폼">Sistema de Gestión</span>
   </h1>
   <div class="crule"></div>
   <p class="cover-sub t"
      data-es="Plataforma digital integrada que centraliza la gestión clínica, el apoyo y el voluntariado de Fundación Latidos — devolviendo más tiempo al equipo para estar con los niños."
-     data-en="An integrated digital platform that centralizes Fundación Latidos' clinical management, donor support, and volunteering — returning more time to the team to be with the children.">
+     data-en="An integrated digital platform that centralizes Fundación Latidos' clinical management, donor support, and volunteering — returning more time to the team to be with the children."
+     data-ko="Fundación Latidos의 임상 관리, 후원, 봉사활동을 하나로 통합하는 디지털 플랫폼 — 더 많은 시간을 아이들 곁으로 돌려주기 위해.">
     Plataforma digital integrada que centraliza la gestión clínica, el apoyo y el voluntariado de Fundación Latidos — devolviendo más tiempo al equipo para estar con los niños.
   </p>
 
   <div class="org-line">
-    <span class="t" data-es="Presentación Institucional · Uso Interno" data-en="Institutional Presentation · Internal Use">Presentación Institucional · Uso Interno</span>
+    <span class="t" data-es="Presentación Institucional · Uso Interno" data-en="Institutional Presentation · Internal Use" data-ko="기관 발표자료 · 내부 사용">Presentación Institucional · Uso Interno</span>
     <span class="sep"></span>
     <span>latidos-platform.vercel.app</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════
-     SLIDE 2 — EL ORIGEN (BACKGROUND)
+     SLIDE 2 — EL PRIMER ENCUENTRO (FOTOS)
 ═══════════════════════════════════════ -->
-<div class="slide bg-b" id="s1">
+<div class="slide bg-b" id="s0b">
   <div class="top-bar"></div>
-  <p class="eyebrow t" data-es="Por qué lo construimos" data-en="Why We Built It" data-ko="구축 배경">Por qué lo construimos</p>
+  <p class="eyebrow t"
+     data-es="El primer encuentro con Fundación Latidos"
+     data-en="First Encounter with Fundación Latidos"
+     data-ko="라티도스와의 첫만남">
+    El primer encuentro con Fundación Latidos
+  </p>
   <h2 class="sh t"
-      data-es="El Origen de <span class='gold'>Este Proyecto</span>"
-      data-en="The Origin of <span class='gold'>This Project</span>"
-      data-ko="<span class='gold'>프로젝트</span>의 기원">
-    El Origen de <span class="gold">Este Proyecto</span>
+      data-es="Fiesta de <span class='gold'>Reyes Magos</span>"
+      data-en="Three Kings Day <span class='gold'>Celebration</span>"
+      data-ko="동방박사의 날 <span class='gold'>축제</span>">
+    Fiesta de <span class="gold">Reyes Magos</span>
   </h2>
   <p class="lead t"
-     data-es="Todo comenzó con un gesto de servicio voluntario. Conocimos a Fundación Latidos y, desde ese primer encuentro, nuestra relación con sus niños y con la Fundación no ha dejado de crecer."
-     data-en="It all started with an act of voluntary service. We met Fundación Latidos, and from that first encounter, our bond with the children and the Foundation has only grown."
-     data-ko="모든 것은 봉사활동에서 시작되었습니다. 라티도스 재단을 알게 된 이후, 아이들과 재단과의 유대감은 계속해서 깊어지고 있습니다.">
-    Todo comenzó con un gesto de servicio voluntario. Conocimos a Fundación Latidos y, desde ese primer encuentro, nuestra relación con sus niños y con la Fundación no ha dejado de crecer.
+     data-es="En enero de 2026, participamos en familia con Fundación Latidos."
+     data-en="In January 2026, we celebrated as a family with Fundación Latidos."
+     data-ko="2026년 1월, 라티도스 재단의 축제에 가족과 함께 참석했습니다.">
+    En enero de 2026, participamos en familia con Fundación Latidos.
   </p>
-  <div class="timeline">
-    <div class="tl-item">
-      <div class="tl-line"></div>
-      <div class="tl-content">
-        <div class="tl-title t" data-es="Un encuentro a través del servicio voluntario" data-en="A Meeting Through Volunteer Service" data-ko="봉사를 통한 만남">Un encuentro a través del servicio voluntario</div>
-        <p class="tl-desc t"
-           data-es="Conocimos a Fundación Latidos a través del voluntariado. El vínculo creció hasta convertirse en tutorías académicas regulares."
-           data-en="We met Fundación Latidos through volunteer work. The bond grew into regular academic tutoring."
-           data-ko="봉사활동을 통해 라티도스 재단을 처음 알게 되었고, 인연이 이어져 정기적인 학습 튜터링까지 진행하게 되었습니다.">
-          Conocimos a Fundación Latidos a través del voluntariado. El vínculo creció hasta convertirse en tutorías académicas regulares.
-        </p>
+
+  <div class="photo-grid-3">
+    <!-- Card 1: Reyes Magos stage group photo with crown frame -->
+    <div class="photo-card-item" onclick="openModal('첫만남 하나/latidos_reyes_casph_frame.jpg', 'Fiesta de Reyes Magos')">
+      <div class="photo-wrap">
+        <img src="첫만남 하나/latidos_reyes_casph_frame.jpg" alt="Fiesta de Reyes Magos" />
       </div>
     </div>
-    <div class="tl-item">
-      <div class="tl-line"></div>
-      <div class="tl-content">
-        <div class="tl-title t" data-es="La organización más hermosa de Panamá: Latidos" data-en="Panama's Most Beautiful Organization: Latidos">La organización más hermosa de Panamá: Latidos</div>
-        <p class="tl-desc t"
-           data-es="A través del voluntariado, descubrimos la hermosa dedicación de Latidos. Para estar más presentes con estos niños, fundé Heartitude — un club escolar nacido de ese deseo."
-           data-en="Through volunteer work, we discovered Latidos' beautiful dedication. To be more present with these children, I founded Heartitude — a school club born from that desire.">
-          A través del voluntariado, descubrimos la hermosa dedicación de Latidos. Para estar más presentes con estos niños, fundé Heartitude — un club escolar nacido de ese deseo.
-        </p>
+
+    <!-- Card 2: Face painting children with Latidos banner (HERO) -->
+    <div class="photo-card-item featured" onclick="openModal('첫만남 하나/latidos_reyes_facepainting.jpg', 'Pintucaritas con los niños')">
+      <div class="photo-wrap">
+        <img src="첫만남 하나/latidos_reyes_facepainting.jpg" alt="Pintucaritas con los niños" />
       </div>
     </div>
-    <div class="tl-item">
-      <div class="tl-line"></div>
-      <div class="tl-content">
-        <div class="tl-title t" data-es="¿Cómo multiplicar este bien?" data-en="How Can We Do Even More Good?">¿Cómo multiplicar este bien?</div>
-        <p class="tl-desc t"
-           data-es="La respuesta era clara: estando más presentes con los niños. Pero el tiempo valioso del equipo de Latidos estaba siendo consumido por tareas administrativas."
-           data-en="The answer was clear: being more present with the children. But the Latidos team's precious time was being consumed by administrative tasks.">
-          La respuesta era clara: estando más presentes con los niños. Pero el tiempo valioso del equipo de Latidos estaba siendo consumido por tareas administrativas.
-        </p>
+
+    <!-- Card 3: Activity & craft table -->
+    <div class="photo-card-item" onclick="openModal('첫만남 하나/latidos_reyes_casph_02.jpg', 'Talleres de creatividad')">
+      <div class="photo-wrap">
+        <img src="첫만남 하나/latidos_reyes_casph_02.jpg" alt="Talleres de creatividad" />
       </div>
     </div>
   </div>
+
   <div class="org-line">
-    <span class="t" data-es="Historia y Contexto" data-en="History &amp; Context">Historia y Contexto</span>
+    <span class="t" data-es="Historia y Contexto" data-en="History &amp; Context" data-ko="역사와 배경">Historia y Contexto</span>
     <span class="sep"></span>
-    <span>Heartitude × Fundación Latidos · 2025–2026</span>
+    <span>Fiesta de Reyes Magos · Enero 2026</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════
-     SLIDE 3 — LA RESPUESTA
+     SLIDE 3 — PÁGINA ADICIONAL (EN BLANCO)
 ═══════════════════════════════════════ -->
-<div class="slide bg-a" id="s2">
+<div class="slide bg-a" id="s0c">
   <div class="top-bar"></div>
-  <p class="eyebrow t" data-es="La respuesta" data-en="The Answer">La respuesta</p>
+  <p class="eyebrow t"
+     data-es="El primer encuentro con Fundación Latidos"
+     data-en="First Encounter with Fundación Latidos"
+     data-ko="라티도스와의 첫만남">
+    El primer encuentro con Fundación Latidos
+  </p>
   <h2 class="sh t"
-      data-es="Un sistema para <span class='gold'>liberar ese tiempo</span>"
-      data-en="A System to <span class='gold'>Free That Time</span>">
-    Un sistema para <span class="gold">liberar ese tiempo</span>
+      data-es="Fiesta de <span class='gold'>Reyes Magos</span>"
+      data-en="Three Kings Day <span class='gold'>Celebration</span>"
+      data-ko="동방박사의 날 <span class='gold'>축제</span>">
+    Fiesta de <span class="gold">Reyes Magos</span>
   </h2>
   <p class="lead t"
-     data-es="La respuesta fue clara: un sistema digital que gestione lo administrativo, para que el equipo pueda dedicarse por completo a los niños."
-     data-en="The answer was clear: a digital system to handle the management, so the team can focus entirely on the children.">
-    La respuesta fue clara: un sistema digital que gestione lo administrativo, para que el equipo pueda dedicarse por completo a los niños.
+     data-es="Pintamos caritas a los niños, compartimos sonrisas y nació un lazo que continúa hasta hoy."
+     data-en="Painting faces and sharing smiles began a bond that continues to this day."
+     data-ko="아이들에게 페이스페인팅을 해주고 미소를 나누며 시작된 인연이 오늘날까지 이어집니다.">
+    Pintamos caritas a los niños, compartimos sonrisas y nació un lazo que continúa hasta hoy.
+  </p>
+  <div class="photo-grid-3">
+    <!-- Card 1: Face painting 1 -->
+    <div class="photo-card-item" onclick="openModal('images/facepainting_1.jpg', 'Pintucaritas con los niños')">
+      <div class="photo-wrap">
+        <img src="images/facepainting_1.jpg" alt="Pintucaritas con los niños" />
+      </div>
+    </div>
+
+    <!-- Card 2: Face painting 2 (featured) -->
+    <div class="photo-card-item featured" onclick="openModal('images/facepainting_2.jpg', 'Sonrisas y alegría compartida')">
+      <div class="photo-wrap">
+        <img src="images/facepainting_2.jpg" alt="Sonrisas y alegría compartida" />
+      </div>
+    </div>
+
+    <!-- Card 3: Face painting 3 -->
+    <div class="photo-card-item" onclick="openModal('images/facepainting_3.jpg', 'Momentos de cercanía')">
+      <div class="photo-wrap">
+        <img src="images/facepainting_3.jpg" alt="Momentos de cercanía" />
+      </div>
+    </div>
+  </div>
+  <div class="org-line">
+    <span class="t" data-es="Historia y Contexto" data-en="History &amp; Context" data-ko="역사와 배경">Historia y Contexto</span>
+    <span class="sep"></span>
+    <span>Fiesta de Reyes Magos · Enero 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 4 — ACTIVIDADES Y TUTORÍAS (FOTOS)
+═══════════════════════════════════════ -->
+<div class="slide bg-b" id="s0d">
+  <div class="top-bar"></div>
+  <p class="eyebrow t"
+     data-es="El lazo que continúa con los niños"
+     data-en="The Continuing Connection with Children"
+     data-ko="계속되는 아이들과의 만남">
+    El lazo que continúa con los niños
+  </p>
+  <h2 class="sh t"
+      data-es="Tutorías Académicas y <span class='gold'>Acompañamiento</span>"
+      data-en="Academic Tutoring &amp; <span class='gold'>Mentorship</span>"
+      data-ko="학업 봉사활동과 <span class='gold'>지속적인 동행</span>">
+    Tutorías Académicas y <span class="gold">Acompañamiento</span>
+  </h2>
+  <p class="lead t"
+     data-es="Cada sábado nos reunimos para aprender y compartir sonrisas,<br/>fortaleciendo nuestro vínculo con los niños semana a semana."
+     data-en="Every Saturday we gather to learn and share smiles,<br/>strengthening our bond with the children week after week."
+     data-ko="매주 토요일 아이들과 함께 모여 공부하고 미소를 나누며,<br/>함께하는 시간만큼 우리의 유대도 매주 깊어졌습니다.">
+    Cada sábado nos reunimos para aprender y compartir sonrisas,<br/>fortaleciendo nuestro vínculo con los niños semana a semana.
+  </p>
+
+  <div class="photo-grid-3">
+    <!-- Card 1: Study session table (4-1.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide4_1.jpg', 'Tutorías académicas y sesiones de estudio')">
+      <div class="photo-wrap">
+        <img src="images/slide4_1.jpg" alt="Tutorías académicas y sesiones de estudio" />
+      </div>
+    </div>
+
+    <!-- Card 2: Math problem exercises (4-2.jpg, featured) -->
+    <div class="photo-card-item featured" onclick="openModal('images/slide4_2.jpg', 'Práctica matemática y resolución de ejercicios')">
+      <div class="photo-wrap">
+        <img src="images/slide4_2.jpg" alt="Práctica matemática y resolución de ejercicios" />
+      </div>
+    </div>
+
+    <!-- Card 3: Volunteer guiding kids with Latidos banner (4-3.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide4_3.jpg', 'Acompañamiento cercano con Fundación Latidos')">
+      <div class="photo-wrap">
+        <img src="images/slide4_3.jpg" alt="Acompañamiento cercano con Fundación Latidos" />
+      </div>
+    </div>
+  </div>
+
+  <div class="org-line">
+    <span class="t" data-es="Voluntariado y Mentoría" data-en="Volunteering &amp; Mentorship" data-ko="봉사활동과 멘토링">Voluntariado y Mentoría</span>
+    <span class="sep"></span>
+    <span>Tutorías de los Sábados · Heartitude × Latidos</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 5 — MOMENTOS ESPECIALES Y APRENDE CON LATIDOS (FOTOS)
+═══════════════════════════════════════ -->
+<div class="slide bg-a" id="s0e">
+  <div class="top-bar"></div>
+  <p class="eyebrow t"
+     data-es="Parte de la familia Fundación Latidos"
+     data-en="Deepening Our Bond as Part of Latidos"
+     data-ko="깊어가는 라티도스의 일원으로서">
+    Parte de la familia Fundación Latidos
+  </p>
+  <h2 class="sh t"
+      data-es="Momentos en Familia y <span class='gold'>un Futuro de Aprendizaje</span>"
+      data-en="Moments as a Family &amp; <span class='gold'>a Gift of Learning</span>"
+      data-ko="가족으로 함께 나눈 추억과 <span class='gold'>아이들을 위한 배움의 선물</span>">
+    Momentos en Familia y <span class="gold">un Futuro de Aprendizaje</span>
+  </h2>
+  <p class="lead t" style="max-width: 1200px;"
+     data-es="Celebramos los cumpleaños juntos sintiéndonos una verdadera familia,<br/>y desarrollamos una app educativa para acompañar el futuro de los niños."
+     data-en="Celebrating birthdays together, we became a true part of the Latidos family,<br/>developing an interactive educational app to empower the children's future."
+     data-ko="아이들의 생일을 함께 축하하며 어느덧 라티도스의 진정한 가족이 되었고,<br/>아이들의 미래를 위해 맞춤형 교육 앱을 개발하고 참여 수업을 함께했습니다.">
+    Celebramos los cumpleaños juntos sintiéndonos una verdadera familia,<br/>y desarrollamos una app educativa para acompañar el futuro de los niños.
+  </p>
+
+  <div class="photo-grid-3">
+    <!-- Card 1: Birthday celebration in Casita Latidos (slide5_1.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide5_1.jpg', 'Celebración de Cumpleaños en Casita Latidos')">
+      <div class="photo-wrap">
+        <img src="images/slide5_1.jpg" alt="Celebración de Cumpleaños en Casita Latidos" style="object-position: center 30%;" />
+      </div>
+    </div>
+
+    <!-- Card 2: Educational App - Heartitude x Latidos Niños (slide5_2.jpg, featured) -->
+    <div class="photo-card-item featured" onclick="openModal('images/slide5_2.jpg', 'App Educativa: Heartitude × Latidos Niños')">
+      <div class="photo-wrap photo-wrap-app">
+        <img src="images/slide5_2.jpg" alt="App Educativa: Heartitude × Latidos Niños" class="app-screenshot" />
+      </div>
+    </div>
+
+    <!-- Card 3: Interactive Math Session on TV Screen (slide5_3.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide5_3.jpg', 'Clases Interactivas de Matemáticas con Pantalla Digital')">
+      <div class="photo-wrap">
+        <img src="images/slide5_3.jpg" alt="Clases Interactivas de Matemáticas con Pantalla Digital" style="object-position: center center;" />
+      </div>
+    </div>
+  </div>
+
+  <div class="org-line">
+    <span class="t" data-es="Familia Latidos y Compromiso Educativo" data-en="Latidos Family &amp; Educational Commitment" data-ko="라티도스 가족과 교육적 동행">Familia Latidos y Compromiso Educativo</span>
+    <span class="sep"></span>
+    <span>Casita Latidos &amp; Heartitude · 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 6 — HOSPITAL DEL NIÑO Y LA CARGA ADMINISTRATIVA (FOTOS)
+═══════════════════════════════════════ -->
+<div class="slide bg-b" id="s0f">
+  <div class="top-bar"></div>
+  <p class="eyebrow t"
+     data-es="La realidad que encontramos en el hospital"
+     data-en="The Reality We Witnessed at the Hospital"
+     data-ko="라티도스 일원으로서 공감한 현실">
+    La realidad que encontramos en el hospital
+  </p>
+  <h2 class="sh t"
+      data-es="Entrega en el Hospital y <span class='gold'>la Carga Administrativa</span>"
+      data-en="Hospital Dedication &amp; <span class='gold'>the Weight of Paperwork</span>"
+      data-ko="아이들을 위한 헌신과 <span class='gold'>행정 업무의 무게</span>">
+    Entrega en el Hospital y <span class="gold">la Carga Administrativa</span>
+  </h2>
+  <p class="lead t" style="max-width: 1350px;"
+     data-es="La organización más hermosa llevaba esperanza al Hospital del Niño,<br/>pero su precioso tiempo con los niños se consumía en tareas administrativas."
+     data-en="The most beautiful organization brought hope to Hospital del Niño,<br/>yet precious time that belonged to the children was consumed by administrative tasks."
+     data-ko="가장 아름다운 단체인 라티도스의 따뜻한 손길이 병원에 닿고 있었지만,<br/>아이들 곁에 머물러야 할 소중한 시간이 행정 업무에 빼앗기고 있었습니다.">
+    La organización más hermosa llevaba esperanza al Hospital del Niño,<br/>pero su precioso tiempo con los niños se consumía en tareas administrativas.
+  </p>
+
+  <div class="photo-grid-3">
+    <!-- Card 1: Hospital del Niño Entrance (slide6_1.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide6_1.jpg', 'Hospital del Niño · Entrada y Visita')">
+      <div class="photo-wrap">
+        <img src="images/slide6_1.jpg" alt="Hospital del Niño · Entrada y Visita" style="object-position: center top;" />
+      </div>
+    </div>
+
+    <!-- Card 2: Latidos Volunteer Team at Hospital (slide6_2.jpg, featured) -->
+    <div class="photo-card-item featured" onclick="openModal('images/slide6_2.jpg', 'Entrega de insumos en el Hospital del Niño')">
+      <div class="photo-wrap">
+        <img src="images/slide6_2.jpg" alt="Entrega de insumos en el Hospital del Niño" style="object-position: center center;" />
+      </div>
+    </div>
+
+    <!-- Card 3: Manual Paperwork on Clipboard in Hallway (slide6_3.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide6_3.jpg', 'Registro manual de pacientes e insumos en el hospital')">
+      <div class="photo-wrap">
+        <img src="images/slide6_3.jpg" alt="Registro manual de pacientes e insumos en el hospital" style="object-position: center 20%;" />
+      </div>
+    </div>
+  </div>
+
+  <div class="org-line">
+    <span class="t" data-es="Apoyo Hospitalario y Retos Operativos" data-en="Hospital Support &amp; Operational Challenges" data-ko="병원 구호 활동과 현장의 과제">Apoyo Hospitalario y Retos Operativos</span>
+    <span class="sep"></span>
+    <span>Hospital del Niño · Fundación Latidos</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 7 — LA RESPUESTA
+═══════════════════════════════════════ -->
+<div class="slide bg-b" id="s2">
+  <div class="top-bar"></div>
+  <p class="eyebrow t" data-es="Lo que necesitábamos" data-en="What We Needed" data-ko="우리에게 필요했던 것">Lo que necesitábamos</p>
+  <h2 class="sh t"
+      data-es="Necesitábamos un sistema que <span class='gold'>devolviera ese tiempo a los niños</span>"
+      data-en="We Needed a System to <span class='gold'>Give That Time Back to the Children</span>"
+      data-ko="그 행정 시간을 아이들에게 <span class='gold'>돌려줄 시스템이 필요했습니다</span>">
+    Necesitábamos un sistema que <span class="gold">devolviera ese tiempo a los niños</span>
+  </h2>
+  <p class="lead t"
+     data-es="El tiempo valioso de Latidos se perdía en tareas administrativas. Necesitábamos un sistema digital que gestionara todo eso, para que el equipo pudiera dedicarse por completo a los niños."
+     data-en="Latidos' precious time was being lost to administrative tasks. We needed a digital system to handle all of that, so the team could dedicate themselves entirely to the children."
+     data-ko="라티도스의 소중한 시간이 행정 업무에 빼앗기고 있었습니다. 그 모든 것을 처리해줄 디지털 시스템이 필요했고, 팀이 오롯이 아이들에게 집중할 수 있기를 바랐습니다.">
+    El tiempo valioso de Latidos se perdía en tareas administrativas. Necesitábamos un sistema digital que gestionara todo eso, para que el equipo pudiera dedicarse por completo a los niños.
   </p>
   <p class="eyebrow t" style="margin-top:18px; opacity:0.7;"
-     data-es="Lo que necesitábamos"
-     data-en="What We Needed">Lo que necesitábamos</p>
+     data-es="Las necesidades que identificamos"
+     data-en="The Needs We Identified"
+     data-ko="우리가 파악한 필요 사항">Las necesidades que identificamos</p>
   <div class="prob-grid">
     <div class="prob-card">
       <div class="prob-num t" data-es="01" data-en="01">01</div>
-      <div class="prob-title t" data-es="Historial clínico siempre accesible" data-en="Always-Accessible Clinical Records">Historial clínico siempre accesible</div>
+      <div class="prob-title t" data-es="Historial clínico siempre accesible" data-en="Always-Accessible Clinical Records" data-ko="언제든 접근 가능한 환자 기록">Historial clínico siempre accesible</div>
       <p class="prob-desc t"
-         data-es="El sistema digitaliza y centraliza el historial de los 717 pacientes: cirugías, ecocardiogramas y medicación, todo en un solo lugar."
-         data-en="The system digitizes and centralizes the records of 717 patients — surgeries, echocardiograms, and medication — all in one place.">
-        El sistema digitaliza y centraliza el historial de los 717 pacientes: cirugías, ecocardiogramas y medicación, todo en un solo lugar.
+         data-es="Necesitábamos digitalizar y centralizar el historial de los 717 pacientes — cirugías, ecocardiogramas y medicación — todo en un solo lugar."
+         data-en="We needed to digitize and centralize the records of 717 patients — surgeries, echocardiograms, and medication — all in one place."
+         data-ko="717명 환자의 수술 기록, 심장초음파, 투약 이력을 디지털화하여 한 곳에 통합할 필요가 있었습니다.">
+        Necesitábamos digitalizar y centralizar el historial de los 717 pacientes — cirugías, ecocardiogramas y medicación — todo en un solo lugar.
       </p>
     </div>
     <div class="prob-card">
-      <div class="prob-num t" data-es="02" data-en="02">02</div>
-      <div class="prob-title t" data-es="Gestión eficiente de donaciones" data-en="Efficient Donation Management">Gestión eficiente de donaciones</div>
+      <div class="prob-num t" data-es="02" data-en="02" data-ko="02">02</div>
+      <div class="prob-title t" data-es="Gestión eficiente de donaciones" data-en="Efficient Donation Management" data-ko="후원 관리의 효율화">Gestión eficiente de donaciones</div>
       <p class="prob-desc t"
-         data-es="El sistema gestiona la información de los donantes y el historial de donaciones, construyendo la confianza que hace posible el bien continuo."
-         data-en="The system manages donor information and donation history, building the trust that makes ongoing good work possible.">
-        El sistema gestiona la información de los donantes y el historial de donaciones, construyendo la confianza que hace posible el bien continuo.
+         data-es="Necesitábamos gestionar la información de los donantes y el historial de donaciones de forma sistemática, para construir la confianza que hace posible el bien continuo."
+         data-en="We needed to manage donor information and donation history systematically, building the trust that makes ongoing good work possible."
+         data-ko="후원자 정보와 기부 이력을 체계적으로 관리하여, 지속적인 선행을 가능하게 하는 신뢰를 쌓을 필요가 있었습니다.">
+        Necesitábamos gestionar la información de los donantes y el historial de donaciones de forma sistemática, para construir la confianza que hace posible el bien continuo.
       </p>
     </div>
     <div class="prob-card">
-      <div class="prob-num t" data-es="03" data-en="03">03</div>
-      <div class="prob-title t" data-es="Voluntariado organizado con impacto visible" data-en="Organized Volunteering with Visible Impact">Voluntariado organizado con impacto visible</div>
+      <div class="prob-num t" data-es="03" data-en="03" data-ko="03">03</div>
+      <div class="prob-title t" data-es="Voluntariado organizado con impacto visible" data-en="Organized Volunteering with Visible Impact" data-ko="체계적인 봉사 관리">Voluntariado organizado con impacto visible</div>
       <p class="prob-desc t"
-         data-es="Desde el registro de voluntarios hasta su historial de actividades, todo se gestiona en un solo lugar para que Latidos pueda estar más presente con los niños."
-         data-en="From volunteer registration to activity history, everything is managed in one place — so Latidos can spend more time with the children.">
-        Desde el registro de voluntarios hasta su historial de actividades, todo se gestiona en un solo lugar para que Latidos pueda estar más presente con los niños.
+         data-es="Necesitábamos organizar el registro de voluntarios y su historial de actividades en un solo lugar, para que Latidos pudiera estar más presente con los niños."
+         data-en="We needed to organize volunteer registration and activity history in one place — so Latidos could spend more time with the children."
+         data-ko="봉사자 등록부터 활동 이력까지 한 곳에서 관리하여, 라티도스가 아이들 곁에 더 많이 머물 수 있어야 했습니다.">
+        Necesitábamos organizar el registro de voluntarios y su historial de actividades en un solo lugar, para que Latidos pudiera estar más presente con los niños.
       </p>
     </div>
     <div class="prob-card">
-      <div class="prob-num t" data-es="04" data-en="04">04</div>
-      <div class="prob-title t" data-es="Datos que demuestran el impacto real" data-en="Data That Demonstrates Real Impact">Datos que demuestran el impacto real</div>
+      <div class="prob-num t" data-es="04" data-en="04" data-ko="04">04</div>
+      <div class="prob-title t" data-es="Datos que demuestran el impacto real" data-en="Data That Demonstrates Real Impact" data-ko="실질적 임팩트를 증명하는 데이터">Datos que demuestran el impacto real</div>
       <p class="prob-desc t"
-         data-es="Todas las actividades se visualizan en un panel de resumen, permitiendo a la Fundación demostrar su impacto con datos."
-         data-en="All activities are visualized in a summary dashboard, allowing the Foundation to demonstrate its impact with data.">
-        Todas las actividades se visualizan en un panel de resumen, permitiendo a la Fundación demostrar su impacto con datos.
+         data-es="Necesitábamos visualizar todas las actividades en un panel de resumen, para que la Fundación pudiera demostrar su impacto con datos concretos."
+         data-en="We needed to visualize all activities in a summary dashboard, so the Foundation could demonstrate its real impact with concrete data."
+         data-ko="모든 활동을 대시보드에서 한눈에 볼 수 있어야 했고, 재단의 임팩트를 구체적인 데이터로 증명할 수 있어야 했습니다.">
+        Necesitábamos visualizar todas las actividades en un panel de resumen, para que la Fundación pudiera demostrar su impacto con datos concretos.
       </p>
     </div>
   </div>
   <div class="org-line">
-    <span class="t" data-es="La Respuesta" data-en="The Answer">La Respuesta</span>
+    <span class="t" data-es="Las Necesidades Identificadas" data-en="The Needs Identified" data-ko="파악된 필요 사항">Las Necesidades Identificadas</span>
     <span class="sep"></span>
     <span>Heartitude × Fundación Latidos</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════
-     SLIDE 3B — EL CAMINO QUE RECORRIMOS JUNTOS
+     SLIDE 9 — EL CAMINO QUE RECORRIMOS JUNTOS
 ═══════════════════════════════════════ -->
 <div class="slide bg-a" id="s2c">
   <div class="top-bar"></div>
-  <p class="eyebrow t" data-es="El proceso conjunto" data-en="The Joint Process">El proceso conjunto</p>
+  <p class="eyebrow t" data-es="El proceso conjunto" data-en="The Joint Process" data-ko="함께한 개발 과정">El proceso conjunto</p>
   <h2 class="sh t"
       data-es="El camino que <span class='gold'>recorrimos juntos</span>"
-      data-en="The Road We <span class='gold'>Walked Together</span>">
+      data-en="The Road We <span class='gold'>Walked Together</span>"
+      data-ko="우리가 <span class='gold'>함께 걸어온 길</span>">
     El camino que <span class="gold">recorrimos juntos</span>
   </h2>
   <p class="lead t"
      data-es="No fue un proyecto de semanas. Fue un proceso largo, construido visita a visita, conversación a conversación, semana a semana."
-     data-en="It wasn't a project of weeks. It was a long process, built visit by visit, conversation by conversation, week by week.">
+     data-en="It wasn't a project of weeks. It was a long process, built visit by visit, conversation by conversation, week by week."
+     data-ko="몇 주 만에 완성된 프로젝트가 아닙니다. 방문 하나하나, 대화 하나하나, 매주 쌓아 올린 긴 여정이었습니다.">
     No fue un proyecto de semanas. Fue un proceso largo, construido visita a visita, conversación a conversación, semana a semana.
   </p>
   <div class="tl">
@@ -626,10 +1120,12 @@
       <div class="tl-content">
         <div class="tl-title t"
              data-es="Recolectar y organizar"
-             data-en="Collect &amp; Organize">Recolectar y organizar</div>
+             data-en="Collect &amp; Organize"
+             data-ko="수집과 정리">Recolectar y organizar</div>
         <p class="tl-desc t"
            data-es="Comenzamos recogiendo todo lo que existía: fichas de pacientes, documentos clínicos, registros de donaciones y suministros. Con ese material, discutimos juntos qué sistema de gestión era necesario."
-           data-en="We started by gathering everything that existed: patient record cards, clinical documents, donation and supply records. With that material, we discussed together what management system was needed.">
+           data-en="We started by gathering everything that existed: patient record cards, clinical documents, donation and supply records. With that material, we discussed together what management system was needed."
+           data-ko="존재하는 모든 것을 모으는 것부터 시작했습니다: 환자 카드, 임상 문서, 기부 및 물품 기록. 그 자료를 바탕으로 어떤 관리 시스템이 필요한지 함께 논의했습니다.">
           Comenzamos recogiendo todo lo que existía: fichas de pacientes, documentos clínicos, registros de donaciones y suministros. Con ese material, discutimos juntos qué sistema de gestión era necesario.
         </p>
       </div>
@@ -639,10 +1135,12 @@
       <div class="tl-content">
         <div class="tl-title t"
              data-es="Ir donde los niños"
-             data-en="Going to the Children">Ir donde los niños</div>
+             data-en="Going to the Children"
+             data-ko="아이들 곁으로">Ir donde los niños</div>
         <p class="tl-desc t"
            data-es="Fuimos directamente a la sala de pediatría. Conversamos con las familias, escuchamos sus realidades y anotamos juntos lo que necesitaban. Eso nos enseñó más que cualquier reunión."
-           data-en="We went directly to the pediatric ward. We spoke with the families, listened to their realities, and recorded together what they needed. That taught us more than any meeting could.">
+           data-en="We went directly to the pediatric ward. We spoke with the families, listened to their realities, and recorded together what they needed. That taught us more than any meeting could."
+           data-ko="소아병동으로 직접 찾아갔습니다. 가족들과 이야기 나누고, 그들의 현실에 귀 기울이며, 필요한 것들을 함께 기록했습니다. 그 경험이 어떤 회의보다 많은 것을 가르쳐 주었습니다.">
           Fuimos directamente a la sala de pediatría. Conversamos con las familias, escuchamos sus realidades y anotamos juntos lo que necesitaban. Eso nos enseñó más que cualquier reunión.
         </p>
       </div>
@@ -652,36 +1150,40 @@
       <div class="tl-content">
         <div class="tl-title t"
              data-es="Construir cada sábado"
-             data-en="Building Every Saturday">Construir cada sábado</div>
+             data-en="Building Every Saturday"
+             data-ko="매주 토요일, 함께 만들다">Construir cada sábado</div>
         <p class="tl-desc t"
            data-es="Cada sábado nos reuníamos para revisar, discutir y mejorar. Lo que no funcionaba, lo arreglamos. Lo que faltaba, lo construimos. Semana a semana, la plataforma fue tomando vida."
-           data-en="Every Saturday we met to review, discuss, and improve. What didn't work, we fixed. What was missing, we built. Week by week, the platform came to life.">
+           data-en="Every Saturday we met to review, discuss, and improve. What didn't work, we fixed. What was missing, we built. Week by week, the platform came to life."
+           data-ko="매주 토요일 모여서 검토하고 논의하고 개선했습니다. 잘 안 되는 건 고쳤고, 부족한 건 새로 만들었습니다. 주 단위로 플랫폼에 생명이 불어넣어졌습니다.">
           Cada sábado nos reuníamos para revisar, discutir y mejorar. Lo que no funcionaba, lo arreglamos. Lo que faltaba, lo construimos. Semana a semana, la plataforma fue tomando vida.
         </p>
       </div>
     </div>
   </div>
   <div class="org-line">
-    <span class="t" data-es="El camino hacia la solución" data-en="The Path to the Solution">El camino hacia la solución</span>
+    <span class="t" data-es="El camino hacia la solución" data-en="The Path to the Solution" data-ko="솔루션을 향한 여정">El camino hacia la solución</span>
     <span class="sep"></span>
     <span>Heartitude × Fundación Latidos</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════
-     SLIDE 3C — LO QUE NOS HACE ÚNICOS
+     SLIDE 10 — UNA PLATAFORMA DISEÑADA SOLO PARA LATIDOS
 ═══════════════════════════════════════ -->
 <div class="slide bg-b" id="s2b">
   <div class="top-bar"></div>
-  <p class="eyebrow t" data-es="Lo que nos diferencia" data-en="What Sets Us Apart">Lo que nos diferencia</p>
+  <p class="eyebrow t" data-es="Lo que construimos para ellos" data-en="What We Built for Them" data-ko="우리가 만든 것">Lo que construimos para ellos</p>
   <h2 class="sh t"
       data-es="Una plataforma diseñada <span class='gold'>solo para Latidos</span>"
-      data-en="A Platform Built <span class='gold'>Only for Latidos</span>">
+      data-en="A Platform Built <span class='gold'>Only for Latidos</span>"
+      data-ko="라티도스만을 위해 설계한 <span class='gold'>맞춤형 플랫폼</span>">
     Una plataforma diseñada <span class="gold">solo para Latidos</span>
   </h2>
   <p class="lead t"
      data-es="No es una herramienta genérica. Es una plataforma construida desde la realidad de los niños que Latidos cuida, con seis funciones integradas y seguridad de nivel profesional."
-     data-en="Not a generic tool. A platform built from the reality of the children Latidos cares for, with six integrated functions and enterprise-level security.">
+     data-en="Not a generic tool. A platform built from the reality of the children Latidos cares for, with six integrated functions and enterprise-level security."
+     data-ko="범용 도구가 아닙니다. 라티도스가 돌벴오는 아이들의 현실에서 출발한 플랫폼으로, 6가지 통합 기능과 전문급 보안을 갖추고 있습니다.">
     No es una herramienta genérica. Es una plataforma construida desde la realidad de los niños que Latidos cuida, con seis funciones integradas y seguridad de nivel profesional.
   </p>
 
@@ -689,10 +1191,11 @@
     <div class="tl-item" style="break-inside:avoid;">
       <div class="tl-line"></div>
       <div class="tl-content">
-        <div class="tl-title t" data-es="Historial clínico del paciente" data-en="Patient Clinical Records">Historial clínico del paciente</div>
+        <div class="tl-title t" data-es="Historial clínico del paciente" data-en="Patient Clinical Records" data-ko="환자 임상 기록">Historial clínico del paciente</div>
         <p class="tl-desc t"
            data-es="Cirugías, ecocardiogramas y medicación — el historial completo de cada paciente, accesible en todo momento."
-           data-en="Surgeries, echocardiograms, and medication — each patient's complete records, accessible at all times.">
+           data-en="Surgeries, echocardiograms, and medication — each patient's complete records, accessible at all times."
+           data-ko="수술, 심장초음파, 투약 이력 — 매 환자의 완전한 기록을 언제든지 확인할 수 있습니다.">
           Cirugías, ecocardiogramas y medicación — el historial completo de cada paciente, accesible en todo momento.
         </p>
       </div>
@@ -700,10 +1203,11 @@
     <div class="tl-item" style="break-inside:avoid;">
       <div class="tl-line"></div>
       <div class="tl-content">
-        <div class="tl-title t" data-es="Gestión eficiente de donaciones" data-en="Efficient Donation Management">Gestión eficiente de donaciones</div>
+        <div class="tl-title t" data-es="Gestión eficiente de donaciones" data-en="Efficient Donation Management" data-ko="후원 관리">Gestión eficiente de donaciones</div>
         <p class="tl-desc t"
            data-es="Información de donantes e historial de donaciones gestionados de forma sistemática, construyendo la confianza que hace posible el bien continuo."
-           data-en="Donor information and donation history managed systematically, building the trust that makes ongoing good work possible.">
+           data-en="Donor information and donation history managed systematically, building the trust that makes ongoing good work possible."
+           data-ko="후원자 정보와 기부 이력을 체계적으로 관리하여, 지속적인 선행을 가능하게 하는 신뢰를 쌓아왔습니다.">
           Información de donantes e historial de donaciones gestionados de forma sistemática, construyendo la confianza que hace posible el bien continuo.
         </p>
       </div>
@@ -711,10 +1215,11 @@
     <div class="tl-item" style="break-inside:avoid;">
       <div class="tl-line"></div>
       <div class="tl-content">
-        <div class="tl-title t" data-es="Coordinación del voluntariado" data-en="Volunteer Coordination">Coordinación del voluntariado</div>
+        <div class="tl-title t" data-es="Coordinación del voluntariado" data-en="Volunteer Coordination" data-ko="봉사 활동 조율">Coordinación del voluntariado</div>
         <p class="tl-desc t"
            data-es="Desde el registro hasta el historial de actividades, todo en un solo lugar para que Latidos pueda estar más presente con los niños."
-           data-en="From registration to activity history, all in one place so Latidos can be more present with the children.">
+           data-en="From registration to activity history, all in one place so Latidos can be more present with the children."
+           data-ko="등록부터 활동 이력까지 한 곳에서 관리하여, 라티도스가 아이들 곳에 더 많이 머물 수 있도록 합니다.">
           Desde el registro hasta el historial de actividades, todo en un solo lugar para que Latidos pueda estar más presente con los niños.
         </p>
       </div>
@@ -733,10 +1238,11 @@
     <div class="tl-item" style="break-inside:avoid;">
       <div class="tl-line"></div>
       <div class="tl-content">
-        <div class="tl-title t" data-es="Guías clínicas por cardiopatía" data-en="Clinical Guides by Heart Condition">Guías clínicas por cardiopatía</div>
+        <div class="tl-title t" data-es="Guías clínicas por cardiopatía" data-en="Clinical Guides by Heart Condition" data-ko="선체성 심장질환별 임상 가이드">Guías clínicas por cardiopatía</div>
         <p class="tl-desc t"
            data-es="Síntomas, tratamiento y cuidado para cada tipo de cardiopatía congénita. Ningún otro sistema de gestión de ONGs ofrece esto."
-           data-en="Symptoms, treatment, and care for each type of congenital heart disease. No other NGO management system offers this.">
+           data-en="Symptoms, treatment, and care for each type of congenital heart disease. No other NGO management system offers this."
+           data-ko="선체성 심장질환 유형별 증상, 치료, 주의사항 제공. 다른 NGO 관리 시스템에는 없는 독보적인 기능입니다.">
           Síntomas, tratamiento y cuidado para cada tipo de cardiopatía congénita. Ningún otro sistema de gestión de ONGs ofrece esto.
         </p>
       </div>
@@ -744,10 +1250,11 @@
     <div class="tl-item" style="break-inside:avoid;">
       <div class="tl-line"></div>
       <div class="tl-content">
-        <div class="tl-title t" data-es="Seguridad con autenticación OTP" data-en="OTP Authentication Security">Seguridad con autenticación OTP</div>
+        <div class="tl-title t" data-es="Seguridad con autenticación OTP" data-en="OTP Authentication Security" data-ko="OTP 이중인증 보안">Seguridad con autenticación OTP</div>
         <p class="tl-desc t"
            data-es="Datos de pacientes, donaciones y asamblea protegidos con doble factor. Solo el personal autorizado puede acceder a información sensible."
-           data-en="Patient data, donations, and assembly information protected with two-factor authentication. Only authorized staff can access sensitive information.">
+           data-en="Patient data, donations, and assembly information protected with two-factor authentication. Only authorized staff can access sensitive information."
+           data-ko="환자 데이터, 기부 정보, 종회 자료를 이중인증으로 보호합니다. 권한이 있는 담당자만 민감한 정보에 접근할 수 있습니다.">
           Datos de pacientes, donaciones y asamblea protegidos con doble factor. Solo el personal autorizado puede acceder a información sensible.
         </p>
       </div>
@@ -756,31 +1263,113 @@
 
   <a href="https://latidos-platform.vercel.app" target="_blank" class="cta-btn">
     <span class="cta-btn-icon">🔗</span>
-    <span class="t" data-es="Ver la plataforma en vivo" data-en="View Live Platform">Ver la plataforma en vivo</span>
+    <span class="t" data-es="Ver la plataforma en vivo" data-en="View Live Platform" data-ko="플랫폼 직접 보기">Ver la plataforma en vivo</span>
     <span class="cta-btn-url">latidos-platform.vercel.app</span>
   </a>
 
   <div class="org-line">
-    <span class="t" data-es="Lo que nos hace únicos" data-en="What Makes Us Unique">Lo que nos hace únicos</span>
+    <span class="t" data-es="Lo que nos hace únicos" data-en="What Makes Us Unique" data-ko="우리를 독보적으로 만드는 것">Lo que nos hace únicos</span>
     <span class="sep"></span>
     <span>Heartitude × Fundación Latidos</span>
   </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 11 — GRACIAS / 감사합니다
+═══════════════════════════════════════ -->
+<div class="slide bg-a centered" id="s9">
+  <div class="top-bar"></div>
+
+  <!-- Top: Gracias + Heartitude Logo side-by-side -->
+  <div style="display:flex;align-items:center;justify-content:center;gap:32px;flex-wrap:wrap;margin-bottom:14px;">
+    <h1 class="t"
+        style="font-family:'Playfair Display',serif;font-size:clamp(3.2rem,5.8vw,5rem);font-weight:700;letter-spacing:-.02em;line-height:1;margin:0;"
+        data-es="Gracias"
+        data-en="Thank You"
+        data-ko="감사합니다">Gracias</h1>
+
+    <div style="background:#ffffff;padding:8px 18px;border-radius:14px;box-shadow:0 8px 24px rgba(0,0,0,0.3);display:flex;align-items:center;">
+      <img src="images/heartitude_logo.png"
+           alt="Heartitude Logo"
+           style="height:64px;width:auto;display:block;object-fit:contain;">
+    </div>
+  </div>
+
+  <p class="t"
+     style="font-size:1.05rem;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin-bottom:34px;"
+     data-es="por su atención y confianza"
+     data-en="for your attention and trust"
+     data-ko="경청해 주셔서 감사합니다">por su atención y confianza</p>
+
+  <!-- Big QR Code Showcase Card -->
+  <div style="display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.05);border:1px solid var(--line);border-radius:20px;padding:26px 42px 22px;backdrop-filter:blur(10px);box-shadow:0 14px 40px rgba(0,0,0,0.35);">
+    <div style="background:#ffffff;padding:12px;border-radius:16px;box-shadow:0 8px 28px rgba(0,0,0,0.28);margin-bottom:14px;">
+      <img src="images/heartitude_qr.png"
+           alt="Heartitude Instagram QR"
+           style="width:230px;height:230px;display:block;border-radius:8px;">
+    </div>
+
+    <!-- Instagram handle & guide -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--gold2)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      <a href="https://www.instagram.com/heartitude_ba"
+         target="_blank"
+         style="font-size:1.05rem;font-weight:700;color:var(--gold2);text-decoration:none;letter-spacing:.05em;">
+        @heartitude_ba
+      </a>
+    </div>
+
+    <span class="t"
+          style="font-size:.8rem;color:var(--muted);letter-spacing:.06em;"
+          data-es="Escanea con tu cámara para visitar nuestro Instagram"
+          data-en="Scan with your phone camera to visit our Instagram"
+          data-ko="스마트폰 카메라로 스캔하여 인스타그램을 확인하세요">
+      Escanea con tu cámara para visitar nuestro Instagram
+    </span>
+  </div>
+
+  <div class="org-line" style="position:absolute;bottom:28px;left:72px;right:72px;">
+    <span class="t" data-es="Fundación Latidos · Asamblea · Septiembre 2026" data-en="Fundación Latidos · Assembly · September 2026" data-ko="Fundación Latidos · 총회 · 2026년 9월">Fundación Latidos · Asamblea · Septiembre 2026</span>
+    <span class="sep"></span>
+    <span>Heartitude × Fundación Latidos</span>
+  </div>
+</div>
 
 </div><!-- /deck -->
 
 <!-- NAV -->
 <div id="nav">
-  <button class="nav-btn t" id="btn-prev" data-es="Anterior" data-en="Previous">Anterior</button>
+  <button class="nav-btn t" id="btn-prev" data-es="Anterior" data-en="Previous" data-ko="이전">Anterior</button>
   <div class="vsep"></div>
   <div class="dot-row" id="dot-row"></div>
   <div class="vsep"></div>
-  <span id="slide-ctr">1 / 10</span>
+  <span id="slide-ctr">1 / 7</span>
   <div class="vsep"></div>
-  <button class="nav-btn t" id="btn-next" data-es="Siguiente" data-en="Next">Siguiente</button>
+  <button class="nav-btn t" id="btn-next" data-es="Siguiente" data-en="Next" data-ko="다음">Siguiente</button>
+  <div class="vsep"></div>
+  <button class="nav-btn fs-btn" id="btn-fs" title="Pantalla completa (F)" onclick="toggleFullscreen()">
+    <span class="fs-icon">⛶</span>
+    <span class="t" data-es="Pantalla Completa" data-en="Fullscreen" data-ko="전체화면">Pantalla Completa</span>
+  </button>
+  <div class="vsep"></div>
+  <div id="lang">
+    <button class="lb on" onclick="setLang('es')">ES</button>
+    <button class="lb" onclick="setLang('en')">EN</button>
+    <button class="lb" onclick="setLang('ko')">KO</button>
+  </div>
 </div>
 <div id="hint">
-  <span class="t" data-es="← → Cambiar diapositiva" data-en="← → Change slide">← → Cambiar diapositiva</span><br/>
-  <span class="t" data-es="F · Pantalla completa" data-en="F · Fullscreen">F · Pantalla completa</span>
+  <span class="t" data-es="← → Cambiar diapositiva" data-en="← → Change slide" data-ko="← → 슬라이드 이동">← → Cambiar diapositiva</span><br/>
+  <span class="t" data-es="F · Pantalla completa" data-en="F · Fullscreen" data-ko="F · 전체화면">F · Pantalla completa</span>
+</div>
+
+<!-- PHOTO LIGHTBOX MODAL -->
+<div id="photo-modal" class="photo-modal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()" title="Cerrar">&times;</button>
+    <img id="modal-img" src="" alt="Foto ampliada" />
+    <div id="modal-caption" class="modal-caption"></div>
+  </div>
 </div>
 
 <style>
@@ -824,6 +1413,9 @@ function goTo(idx) {
   slides[idx].classList.add('active');
   slides[idx].scrollTop = 0; // Reset scroll position on mobile
   cur = idx; ui();
+  if (slides[idx].id) {
+    try { history.replaceState(null, null, '#' + slides[idx].id); } catch(e){}
+  }
   // trigger animations
   if (cur === 6) setTimeout(() => { document.querySelectorAll('#s6 .ur-fill').forEach(el => el.style.width = el.dataset.w); }, 260);
   if (cur === 7) setTimeout(() => { document.querySelectorAll('#s7 .crow-fill').forEach(el => el.style.width = el.dataset.w); }, 260);
@@ -836,10 +1428,88 @@ const prev = () => goTo(cur-1);
 document.getElementById('btn-next').addEventListener('click', next);
 document.getElementById('btn-prev').addEventListener('click', prev);
 document.addEventListener('keydown', e => {
+  const modal = document.getElementById('photo-modal');
+  if (e.key === 'Escape') {
+    if (modal && modal.classList.contains('open')) {
+      closeModal();
+      return;
+    }
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+      const efs = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+      if (efs) {
+        try { efs.call(document); } catch(err){}
+      }
+      return;
+    }
+  }
+  if (modal && modal.classList.contains('open')) return;
   if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
   if (e.key==='ArrowLeft'){e.preventDefault();prev();}
-  if (e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}
+  if (e.key==='f'||e.key==='F'){toggleFullscreen();}
 });
+
+function toggleFullscreen() {
+  const elem = document.documentElement;
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+  if (!isFs) {
+    const rfs = elem.requestFullscreen || elem.webkitRequestFullscreen || elem.mozRequestFullScreen || elem.msRequestFullscreen;
+    if (rfs) {
+      try {
+        const p = rfs.call(elem);
+        if (p && p.catch) p.catch(err => console.warn(err));
+      } catch(e) { console.warn(e); }
+    }
+  } else {
+    const efs = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+    if (efs) {
+      try {
+        const p = efs.call(document);
+        if (p && p.catch) p.catch(err => console.warn(err));
+      } catch(e) { console.warn(e); }
+    }
+  }
+}
+
+['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+  document.addEventListener(evt, () => {
+    const btn = document.getElementById('btn-fs');
+    if (!btn) return;
+    const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+    const icon = btn.querySelector('.fs-icon');
+    if (icon) icon.textContent = isFs ? '🗗' : '⛶';
+    const textSpan = btn.querySelector('.t');
+    if (textSpan) {
+      if (isFs) {
+        textSpan.dataset.es = "Salir";
+        textSpan.dataset.en = "Exit";
+        textSpan.dataset.ko = "전체화면 종료";
+        textSpan.textContent = lang === 'ko' ? '전체화면 종료' : (lang === 'en' ? 'Exit' : 'Salir');
+      } else {
+        textSpan.dataset.es = "Pantalla Completa";
+        textSpan.dataset.en = "Fullscreen";
+        textSpan.dataset.ko = "전체화면";
+        textSpan.textContent = lang === 'ko' ? '전체화면' : (lang === 'en' ? 'Fullscreen' : 'Pantalla Completa');
+      }
+    }
+    btn.title = isFs ? (lang === 'ko' ? '전체화면 종료 (F)' : lang === 'en' ? 'Exit Fullscreen (F)' : 'Salir de pantalla completa (F)')
+                     : (lang === 'ko' ? '전체화면 (F)' : lang === 'en' ? 'Fullscreen (F)' : 'Pantalla completa (F)');
+  });
+});
+
+function openModal(src, caption) {
+  const m = document.getElementById('photo-modal');
+  const img = document.getElementById('modal-img');
+  const cap = document.getElementById('modal-caption');
+  if (!m || !img) return;
+  img.src = src;
+  cap.textContent = caption || '';
+  m.classList.add('open');
+}
+
+function closeModal() {
+  const m = document.getElementById('photo-modal');
+  if (m) m.classList.remove('open');
+}
 
 let tx = 0, ty = 0;
 document.addEventListener('touchstart', e => {
@@ -855,7 +1525,19 @@ document.addEventListener('touchend', e => {
     dx < 0 ? next() : prev();
   }
 }, {passive:true});
+
 ui();
+const urlParams = new URLSearchParams(window.location.search);
+const targetId = urlParams.get('slide') || urlParams.get('s') || window.location.hash.slice(1);
+if (targetId) {
+  const targetIdx = Array.from(slides).findIndex(s => s.id === targetId || s.id === 's' + targetId);
+  if (targetIdx !== -1) {
+    slides[cur].classList.remove('active');
+    slides[targetIdx].classList.add('active');
+    cur = targetIdx;
+    ui();
+  }
+}
 
 /* ── LANGUAGE TOGGLE ── */
 let lang = 'es';
@@ -892,7 +1574,47 @@ window.addEventListener('load', () => {
     ['Plataforma digital integrada que centraliza la gestión clínica, el apoyo y el voluntariado de Fundación Latidos — devolviendo más tiempo al equipo para estar con los niños.','Fundación Latidos의 임상 관리, 후원, 봉사활동을 하나로 통합하는 디지털 플랫폼 — 더 많은 시간을 아이들 곳으로 돌려주기 위해.'],
     ['Sábado 12 de Septiembre, 2026 · 10:00 AM','2026년 9월 12일 토요일 · 오전 10:00'],
     ['Presentación Institucional · Uso Interno','기관 발표자료 · 내부 사용'],
-    // Slide 2 — El Origen
+    // Slide 2 — El Primer Encuentro (Fotos)
+    ['El primer encuentro con Fundación Latidos','라티도스와의 첫만남'],
+    ["Fiesta de <span class='gold'>Reyes Magos</span>","동방박사의 날 <span class='gold'>축제</span>"],
+    ['En enero de 2026, participamos en familia con Fundación Latidos.','2026년 1월, 라티도스 재단의 축제에 가족과 함께 참석했습니다.'],
+    ['👑 Fiesta de Reyes Magos','👑 동방박사의 날 축제'],
+    ['Celebración comunitaria con las familias de Latidos','라티도스 가족들과 함께한 축제의 장'],
+    ['🎨 Pintucaritas con los niños','🎨 아이들과 함께한 페이스페인팅'],
+    ['Pintando caritas y compartiendo regalos con los niños','가족과 함께 아이들의 얼굴에 그림을 선물했던 시간'],
+    ['✨ Alegría y talleres','✨ 공작 및 미술 활동'],
+    ['Talleres de creatividad y momentos de cercanía','아이들과 가까이서 호흡한 따뜻한 교감의 순간'],
+
+    ['Pintamos caritas a los niños, compartimos sonrisas y nació un lazo que continúa hasta hoy.','아이들에게 페이스페인팅을 해주고 미소를 나누며 시작된 인연이 오늘날까지 이어집니다.'],
+    ['Fotos adicionales de la Fiesta de Reyes Magos','동방박사의 날 추가 사진 배치 공간'],
+    // Slide 4 — Encuentro Continuo y Tutorías (Fotos)
+    ['El lazo que continúa con los niños','계속되는 아이들과의 만남'],
+    ["Tutorías Académicas y <span class='gold'>Acompañamiento</span>","학업 봉사활동과 <span class='gold'>지속적인 동행</span>"],
+    ['Cada sábado nos reunimos para aprender y compartir sonrisas,<br/>fortaleciendo nuestro vínculo con los niños semana a semana.','매주 토요일 아이들과 함께 모여 공부하고 미소를 나누며,<br/>함께하는 시간만큼 우리의 유대도 매주 깊어졌습니다.'],
+    ['Tutorías académicas y sesiones de estudio','학습 세션과 수학 튜터링'],
+    ['Práctica matemática y resolución de ejercicios','함께 풀어가는 수학 문제 풀이'],
+    ['Acompañamiento cercano con Fundación Latidos','라티도스 재단과 함께하는 따뜻한 학습 지도'],
+    ['Voluntariado y Mentoría','봉사활동과 멘토링'],
+
+    // Slide 5 — Parte de la Familia y Compromiso (Fotos)
+    ['Parte de la familia Fundación Latidos','깊어가는 라티도스의 일원으로서'],
+    ["Momentos en Familia y <span class='gold'>un Futuro de Aprendizaje</span>","가족으로 함께 나눈 추억과 <span class='gold'>아이들을 위한 배움의 선물</span>"],
+    ['Celebramos los cumpleaños juntos sintiéndonos una verdadera familia,<br/>y desarrollamos una app educativa para acompañar el futuro de los niños.','아이들의 생일을 함께 축하하며 어느덧 라티도스의 진정한 가족이 되었고,<br/>아이들의 미래를 위해 맞춤형 교육 앱을 개발하고 참여 수업을 함께했습니다.'],
+    ['Celebración de Cumpleaños en Casita Latidos','라티도스 생일 축하 파티'],
+    ['App Educativa: Heartitude × Latidos Niños','라티도스 어린이 수학 모험 앱 (Heartitude 개발)'],
+    ['Clases Interactivas de Matemáticas con Pantalla Digital','대형 화면을 활용한 디지털 수학 참여 수업'],
+    ['Familia Latidos y Compromiso Educativo','라티도스 가족과 교육적 동행'],
+
+    // Slide 6 — Hospital del Niño y Carga Administrativa (Fotos)
+    ['La realidad que encontramos en el hospital','라티도스 일원으로서 공감한 현실'],
+    ["Entrega en el Hospital y <span class='gold'>la Carga Administrativa</span>","아이들을 위한 헌신과 <span class='gold'>행정 업무의 무게</span>"],
+    ['La hermosa labor de Latidos llevaba esperanza al Hospital del Niño,<br/>pero su valioso tiempo se consumía en tareas administrativas.','가장 아름다운 단체인 라티도스의 따뜻한 손길이 병원에 닿고 있었지만,<br/>아이들 곁에 머물러야 할 소중한 시간이 행정 업무에 빼앗기고 있었습니다.'],
+    ['Hospital del Niño · Entrada y Visita','Hospital del Niño 소아 병원 현장 방문'],
+    ['Entrega de insumos en el Hospital del Niño','Hospital del Niño 앞 구호물품을 전달하는 라티도스 봉사팀'],
+    ['Registro manual de pacientes e insumos en el hospital','병원 복도에서 수기로 환자 정보와 물품을 기록하는 모습'],
+    ['Apoyo Hospitalario y Retos Operativos','병원 구호 활동과 현장의 과제'],
+
+    // Slide 7 — El Origen (Timeline)
     ['Por qué lo construimos','왜 만들었는가'],
     ['El Origen de','이 프로젝트의'],
     ['Este Proyecto','시작 배경'],
@@ -1076,9 +1798,14 @@ window.addEventListener('load', () => {
     ['Hotel RIU · Calle 50 · Panamá','Hotel RIU · Calle 50 · 파나마'],
     ['Sábado 12 · Septiembre · 2026','2026년 9월 12일 · 토요일'],
     ['Gracias por su atención','경청해 주셔서 감사합니다'],
+    ['Gracias','감사합니다'],
+    ['por su atención y confianza','경청해 주셔서 감사합니다'],
+    ['Desarrollado por Heartitude<br/>para Fundación Latidos','Heartitude가 Fundación Latidos를<br/>위해 개발했습니다'],
+    ['Escanea con tu cámara para visitar nuestro Instagram','스마트폰 카메라로 스캔하여 인스타그램을 확인하세요'],
     // Nav & hint
     ['Anterior','이전'],
     ['Siguiente','다음'],
+    ['Pantalla','전체화면'],
     ['← → Cambiar diapositiva','← → 슬라이드 이동'],
     ['F · Pantalla completa','F · 전체화면'],
   ];
@@ -1094,6 +1821,11 @@ window.addEventListener('load', () => {
       el.dataset.ko = koMap[es];
     }
   });
+
+  const initialLang = urlParams.get('lang');
+  if (initialLang && ['es', 'en', 'ko'].includes(initialLang.toLowerCase())) {
+    setLang(initialLang.toLowerCase());
+  }
 });
 </script>
 </body>

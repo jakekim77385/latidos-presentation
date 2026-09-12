@@ -30,13 +30,13 @@
     .slide {
       position: absolute; inset: 0;
       display: flex; flex-direction: column;
-      justify-content: center; align-items: flex-start;
-      padding: 76px 116px;
+      justify-content: flex-start; align-items: flex-start;
+      padding: 72px 116px 60px;
       opacity: 0; transition: opacity .5s ease;
       pointer-events: none;
     }
     .slide.active { opacity: 1; pointer-events: all; }
-    .slide.centered { align-items: center; text-align: center; }
+    .slide.centered { justify-content: center; align-items: center; text-align: center; }
 
     /* ── BACKGROUNDS ── */
     .bg-a {
@@ -65,17 +65,84 @@
     #nav { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; background: rgba(11,22,40,.92); backdrop-filter: blur(16px); border: 1px solid var(--line); border-radius: 5px; padding: 7px 16px; z-index: 200; }
     .nav-btn { background: none; border: none; color: var(--muted); font-size: .8rem; font-weight: 600; letter-spacing: .05em; cursor: pointer; padding: 4px 8px; transition: color .2s; font-family: 'Inter', sans-serif; }
     .nav-btn:hover { color: var(--gold2); }
+    .fs-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--gold2) !important;
+      padding: 5px 12px !important;
+      border-radius: 5px;
+      background: rgba(201,168,76,.18);
+      border: 1px solid rgba(201,168,76,.45) !important;
+      font-weight: 700;
+      transition: all .2s ease;
+      cursor: pointer;
+    }
+    .fs-btn:hover {
+      background: rgba(201,168,76,.32) !important;
+      color: var(--white) !important;
+      border-color: var(--gold2) !important;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(201,168,76,.25);
+    }
+    .fs-icon { font-size: 1.05rem; line-height: 1; }
     #slide-ctr { font-size: .7rem; color: var(--dim); font-weight: 500; min-width: 44px; text-align: center; }
     .vsep { width: 1px; height: 14px; background: var(--line); }
     .dot-row { display: flex; gap: 5px; align-items: center; }
     .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--dim); cursor: pointer; transition: background .3s, transform .3s; }
     .dot.on { background: var(--gold); transform: scale(1.5); }
 
-    /* ── LANGUAGE TOGGLE ── */
-    #lang { position: fixed; top: 22px; right: 28px; display: flex; background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 5px; overflow: hidden; z-index: 300; }
-    .lb { padding: 6px 15px; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: var(--muted); background: none; border: none; cursor: pointer; transition: background .25s, color .25s; }
+    /* ── LANGUAGE TOGGLE (Inside Bottom Nav) ── */
+    #lang {
+      display: inline-flex;
+      align-items: center;
+      background: rgba(255, 255, 255, .06);
+      border: 1px solid rgba(201, 168, 76, .25);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .lb {
+      padding: 4px 9px;
+      font-family: 'Inter', sans-serif;
+      font-size: .72rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      color: var(--muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
     .lb.on { background: var(--gold); color: var(--navy); }
-    .lb:hover:not(.on) { background: rgba(255,255,255,.06); color: var(--white); }
+    .lb:hover:not(.on) { background: rgba(255, 255, 255, .08); color: var(--white); }
+
+    /* ── TOP-RIGHT LATIDOS LOGO ── */
+    #top-logo {
+      position: fixed;
+      top: 18px;
+      right: 28px;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      padding: 6px 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(201, 168, 76, 0.4);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    #top-logo:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 22px rgba(201, 168, 76, 0.3);
+      background: #ffffff;
+    }
+    #top-logo img {
+      height: 38px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
 
     /* ── HINT ── */
     #hint { position: fixed; bottom: 58px; right: 28px; font-size: .66rem; color: var(--dim); text-align: right; line-height: 2; letter-spacing: .04em; }
@@ -83,12 +150,31 @@
     /* ════════════════════════════════════
        TYPOGRAPHY
     ════════════════════════════════════ */
-    .eyebrow { font-size: .92rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+    .eyebrow { font-size: .98rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
     .eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--gold); opacity: .55; }
     h1.cover-h { font-family: 'Playfair Display', serif; font-size: clamp(3rem, 5vw, 5.2rem); font-weight: 700; line-height: 1.18; letter-spacing: -.01em; }
     h2.sh { font-family: 'Playfair Display', serif; font-size: clamp(2.4rem, 3.8vw, 3.9rem); font-weight: 700; line-height: 1.2; letter-spacing: -.01em; margin-bottom: 18px; }
     .gold { color: var(--gold2); }
-    .lead { font-size: 1.28rem; font-weight: 400; color: var(--muted); line-height: 1.82; max-width: 660px; }
+    .lead { font-size: 1.28rem; font-weight: 400; color: var(--muted); line-height: 1.82; max-width: 960px; margin-bottom: 20px; }
+    .placeholder-box {
+      width: 100%;
+      max-width: 1400px;
+      height: clamp(300px, 48vh, 500px);
+      margin-top: 8px;
+      border: 2px dashed rgba(201, 168, 76, 0.35);
+      border-radius: 8px;
+      background: rgba(201, 168, 76, 0.03);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      color: var(--gold2);
+      transition: border-color .3s;
+    }
+    .placeholder-icon { font-size: 2.8rem; opacity: 0.75; }
+    .placeholder-title { font-size: 1.15rem; font-weight: 600; letter-spacing: .02em; color: var(--white); }
+    .placeholder-sub { font-size: 0.95rem; color: var(--muted); max-width: 680px; text-align: center; line-height: 1.6; }
     .divider { width: 44px; height: 1px; background: var(--gold); opacity: .45; margin: 22px 0; }
     .cover-sub { font-size: 1.12rem; color: var(--muted); line-height: 1.88; max-width: 580px; margin: 0 auto 28px; }
     .cover-tags { display: flex; gap: 9px; flex-wrap: wrap; justify-content: center; }
@@ -97,24 +183,207 @@
     /* ════════════════════════════════════
        TIMELINE (El Origen)
     ════════════════════════════════════ */
-    .timeline { width: 100%; max-width: 840px; margin-top: 30px; display: flex; flex-direction: column; gap: 0; }
-    .tl-item { display: grid; grid-template-columns: 1px 1fr; gap: 0 20px; padding-bottom: 24px; }
+    .timeline { width: 100%; max-width: 860px; margin-top: 26px; display: flex; flex-direction: column; gap: 0; }
+    .tl-item { display: grid; grid-template-columns: 1px 1fr; gap: 0 22px; padding-bottom: 22px; }
     .tl-item:last-child { padding-bottom: 0; }
-    .tl-year { font-family: 'Playfair Display', serif; font-size: .9rem; font-weight: 700; color: var(--gold2); text-align: right; padding-top: 2px; }
+    .tl-year { font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700; color: var(--gold2); text-align: right; padding-top: 2px; }
     .tl-line { background: var(--line); position: relative; }
-    .tl-line::before { content: ''; position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 7px; height: 7px; border-radius: 50%; background: var(--gold); border: 2px solid var(--navy2); }
-    .tl-content { padding-left: 4px; }
-    .tl-title { font-size: .92rem; font-weight: 700; color: var(--white); margin-bottom: 5px; }
-    .tl-desc  { font-size: .8rem; color: var(--muted); line-height: 1.72; }
+    .tl-line::before { content: ''; position: absolute; top: 7px; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; border-radius: 50%; background: var(--gold); border: 2px solid var(--navy2); }
+    .tl-content { padding-left: 6px; }
+    .tl-title { font-size: 1.10rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .tl-desc  { font-size: 0.94rem; color: #b8c8df; line-height: 1.74; }
+
+    /* ════════════════════════════════════
+       PHOTO SLIDE (Slide 2: El Primer Encuentro)
+    ════════════════════════════════════ */
+    .photo-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      width: 100%;
+      max-width: 1540px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+    .photo-card-item {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1.5px solid rgba(201, 168, 76, 0.35);
+      border-radius: 12px;
+      padding: 10px;
+      cursor: pointer;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+    .photo-card-item:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201, 168, 76, 0.85);
+      box-shadow: 0 20px 48px rgba(0, 0, 0, 0.6), 0 0 24px rgba(201, 168, 76, 0.3);
+    }
+    .photo-card-item.featured {
+      border-color: rgba(201, 168, 76, 0.6);
+      background: rgba(201, 168, 76, 0.05);
+      box-shadow: 0 18px 44px rgba(0, 0, 0, 0.5), 0 0 16px rgba(201, 168, 76, 0.2);
+    }
+    .photo-wrap {
+      position: relative;
+      width: 100%;
+      height: clamp(340px, 54vh, 560px);
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--navy2);
+    }
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+    .photo-card-item:hover .photo-wrap img {
+      transform: scale(1.04);
+    }
+    .photo-overlay-tag {
+      position: absolute;
+      bottom: 10px;
+      left: 10px;
+      right: 10px;
+      background: rgba(11, 22, 40, 0.88);
+      backdrop-filter: blur(8px);
+      color: var(--gold3);
+      font-size: 0.74rem;
+      font-weight: 600;
+      padding: 6px 12px;
+      border-radius: 4px;
+      border: 1px solid rgba(201, 168, 76, 0.25);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+    }
+    .photo-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.55;
+      margin-top: 12px;
+      text-align: center;
+    }
+    .photo-grid-2 {
+      display: grid;
+      grid-template-columns: 1.22fr 0.98fr;
+      gap: 28px;
+      width: 100%;
+      max-width: 1460px;
+      margin-top: 18px;
+      align-items: stretch;
+    }
+    .photo-wrap-app {
+      background: radial-gradient(circle at 50% 35%, rgba(201, 168, 76, 0.12) 0%, rgba(15, 30, 56, 0.92) 60%, rgba(11, 22, 40, 0.98) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .photo-wrap-app img.app-screenshot {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 10px 0;
+      filter: drop-shadow(0 14px 28px rgba(0, 0, 0, 0.65));
+      transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .photo-card-item:hover .photo-wrap-app img.app-screenshot {
+      transform: scale(1.03);
+    }
+    @media (max-width: 900px) {
+      .photo-grid-2, .photo-grid-3 {
+        grid-template-columns: 1fr;
+        gap: 16px;
+      }
+      .photo-wrap { height: 210px; }
+    }
+
+    /* ── PHOTO LIGHTBOX MODAL ── */
+    .photo-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(6,12,24,.88);
+      backdrop-filter: blur(12px);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .25s ease;
+      padding: 24px;
+    }
+    .photo-modal.open {
+      opacity: 1;
+      pointer-events: all;
+    }
+    .modal-content {
+      position: relative;
+      max-width: 90vw;
+      max-height: 88vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(15,30,56,.95);
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      padding: 12px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.7);
+    }
+    .modal-content img {
+      max-width: 86vw;
+      max-height: 76vh;
+      object-fit: contain;
+      border-radius: 4px;
+      display: block;
+    }
+    .modal-caption {
+      margin-top: 10px;
+      font-size: .88rem;
+      color: var(--gold2);
+      font-weight: 500;
+      text-align: center;
+    }
+    .modal-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: var(--gold);
+      color: var(--navy);
+      border: none;
+      font-size: 1.2rem;
+      font-weight: bold;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,.4);
+    }
+    @media (max-width: 900px) {
+      .s1-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .s1-photo-hero { height: 160px; }
+      .s1-photo-sub { height: 130px; }
+    }
 
     /* ════════════════════════════════════
        PROBLEM CARDS (2-col list)
     ════════════════════════════════════ */
-    .prob-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; width: 100%; max-width: 840px; margin-top: 28px; }
-    .prob-card { border-left: 2px solid rgba(201,168,76,.35); padding: 4px 0 4px 18px; }
-    .prob-num  { font-size: .65rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
-    .prob-title{ font-size: .92rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
-    .prob-desc { font-size: .8rem; color: var(--muted); line-height: 1.72; }
+    .prob-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px 26px; width: 100%; max-width: 880px; margin-top: 20px; }
+    .prob-card { border-left: 2px solid rgba(201,168,76,.4); padding: 4px 0 4px 18px; }
+    .prob-num  { font-size: .78rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .prob-title{ font-size: 1.10rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .prob-desc { font-size: 0.94rem; color: #b8c8df; line-height: 1.74; }
 
     /* ════════════════════════════════════
        RESPONSE / DECISION (2-col)
@@ -242,10 +511,10 @@
     .fn-tag-label { font-size: .82rem; font-weight: 600; color: var(--white); }
 
     /* PLATFORM CTA BUTTON */
-    .cta-btn { display: inline-flex; align-items: center; gap: 10px; margin-top: 22px; padding: 13px 28px; background: linear-gradient(135deg, rgba(201,168,76,.15), rgba(201,168,76,.05)); border: 1px solid rgba(201,168,76,.4); border-radius: 4px; text-decoration: none; color: var(--gold3); font-family: 'Inter', sans-serif; font-size: .92rem; font-weight: 600; letter-spacing: .03em; transition: all .2s; }
-    .cta-btn:hover { background: rgba(201,168,76,.2); border-color: rgba(201,168,76,.7); color: var(--gold); }
-    .cta-btn-icon { font-size: 1.1rem; }
-    .cta-btn-url { font-size: .78rem; color: var(--muted); font-weight: 400; margin-left: 4px; }
+    .cta-btn { display: inline-flex; align-items: center; gap: 12px; margin-top: 22px; padding: 13px 30px; background: linear-gradient(135deg, rgba(201,168,76,.2), rgba(201,168,76,.06)); border: 1.5px solid rgba(201,168,76,.45); border-radius: 6px; text-decoration: none; color: var(--gold3); font-family: 'Inter', sans-serif; font-size: 1.02rem; font-weight: 600; letter-spacing: .03em; transition: all .2s; }
+    .cta-btn:hover { background: rgba(201,168,76,.28); border-color: rgba(201,168,76,.8); color: #ffffff; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.4); }
+    .cta-btn-icon { font-size: 1.2rem; }
+    .cta-btn-url { font-size: .84rem; color: #b8c8df; font-weight: 400; margin-left: 6px; }
 
     /* COVER RULE */
     .crule { width: 48px; height: 1px; background: var(--gold); margin: 24px auto; opacity: .45; }
@@ -397,23 +666,27 @@
       }
       .org-line .sep { display: none !important; }
 
-      /* Top Language Selector */
-      #lang {
-        top: 12px !important;
+      /* Top-Right Logo */
+      #top-logo {
+        top: 10px !important;
         right: 12px !important;
+        padding: 3px 8px !important;
       }
-      .lb {
-        padding: 5px 12px !important;
-        font-size: 0.72rem !important;
+      #top-logo img {
+        height: 24px !important;
       }
 
       /* Bottom Navigation Bar */
       #nav {
-        bottom: 10px !important;
-        padding: 6px 12px !important;
-        gap: 8px !important;
+        bottom: 8px !important;
+        padding: 5px 10px !important;
+        gap: 6px !important;
         border-radius: 20px !important;
-        max-width: calc(100vw - 20px) !important;
+        max-width: calc(100vw - 16px) !important;
+      }
+      .lb {
+        padding: 3px 6px !important;
+        font-size: 0.65rem !important;
       }
       .nav-btn {
         font-size: 0.78rem !important;
@@ -449,7 +722,11 @@
 <body>
 
 <div id="prog-wrap"><div id="prog-fill"></div></div>
-<div id="lang"><button class="lb on" onclick="setLang('es')">ES</button><button class="lb" onclick="setLang('en')">EN</button><button class="lb" onclick="setLang('ko')">KO</button></div>
+
+<!-- TOP RIGHT LATIDOS LOGO -->
+<div id="top-logo" title="Fundación Latidos">
+  <img src="images/latidos-logo.png" alt="Fundación Latidos" />
+</div>
 
 <div id="deck">
 
@@ -459,30 +736,299 @@
 <div class="slide bg-a centered active" id="s0">
   <div class="top-bar"></div>
   <p class="eyebrow" style="justify-content:center">
-    <span class="t" data-es="Reunión — Asamblea Fundación Latidos" data-en="Meeting — Fundación Latidos Assembly">Reunión — Asamblea Fundación Latidos</span>
+    <span class="t" data-es="Reunión — Asamblea Fundación Latidos" data-en="Meeting — Fundación Latidos Assembly" data-ko="재단 총회 — Fundación Latidos 총회">Reunión — Asamblea Fundación Latidos</span>
   </p>
   <h1 class="cover-h">
-    <span class="t" data-es="Presentación del Nuevo" data-en="Presentation of the New">Presentación del Nuevo</span><br/>
-    <span class="gold t" data-es="Sistema de Gestión" data-en="Management System">Sistema de Gestión</span>
+    <span class="t" data-es="Presentación del Nuevo" data-en="Presentation of the New" data-ko="새로운 시스템 발표">Presentación del Nuevo</span><br/>
+    <span class="gold t" data-es="Sistema de Gestión" data-en="Management System" data-ko="관리 플랫폼">Sistema de Gestión</span>
   </h1>
   <div class="crule"></div>
   <p class="cover-sub t"
      data-es="Plataforma digital integrada que centraliza la gestión clínica, el apoyo y el voluntariado de Fundación Latidos — devolviendo más tiempo al equipo para estar con los niños."
-     data-en="An integrated digital platform that centralizes Fundación Latidos' clinical management, donor support, and volunteering — returning more time to the team to be with the children.">
+     data-en="An integrated digital platform that centralizes Fundación Latidos' clinical management, donor support, and volunteering — returning more time to the team to be with the children."
+     data-ko="Fundación Latidos의 임상 관리, 후원, 봉사활동을 하나로 통합하는 디지털 플랫폼 — 더 많은 시간을 아이들 곁으로 돌려주기 위해.">
     Plataforma digital integrada que centraliza la gestión clínica, el apoyo y el voluntariado de Fundación Latidos — devolviendo más tiempo al equipo para estar con los niños.
   </p>
 
   <div class="org-line">
-    <span class="t" data-es="Presentación Institucional · Uso Interno" data-en="Institutional Presentation · Internal Use">Presentación Institucional · Uso Interno</span>
+    <span class="t" data-es="Presentación Institucional · Uso Interno" data-en="Institutional Presentation · Internal Use" data-ko="기관 발표자료 · 내부 사용">Presentación Institucional · Uso Interno</span>
     <span class="sep"></span>
     <span>latidos-platform.vercel.app</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════
-     SLIDE 2 — EL ORIGEN (BACKGROUND)
+     SLIDE 2 — EL PRIMER ENCUENTRO (FOTOS)
 ═══════════════════════════════════════ -->
-<div class="slide bg-b" id="s1">
+<div class="slide bg-b" id="s0b">
+  <div class="top-bar"></div>
+  <p class="eyebrow t"
+     data-es="El primer encuentro con Fundación Latidos"
+     data-en="First Encounter with Fundación Latidos"
+     data-ko="라티도스와의 첫만남">
+    El primer encuentro con Fundación Latidos
+  </p>
+  <h2 class="sh t"
+      data-es="Fiesta de <span class='gold'>Reyes Magos</span>"
+      data-en="Three Kings Day <span class='gold'>Celebration</span>"
+      data-ko="동방박사의 날 <span class='gold'>축제</span>">
+    Fiesta de <span class="gold">Reyes Magos</span>
+  </h2>
+  <p class="lead t"
+     data-es="En enero de 2026, participamos en familia con Fundación Latidos."
+     data-en="In January 2026, we celebrated as a family with Fundación Latidos."
+     data-ko="2026년 1월, 라티도스 재단의 축제에 가족과 함께 참석했습니다.">
+    En enero de 2026, participamos en familia con Fundación Latidos.
+  </p>
+
+  <div class="photo-grid-3">
+    <!-- Card 1: Reyes Magos stage group photo with crown frame -->
+    <div class="photo-card-item" onclick="openModal('첫만남 하나/latidos_reyes_casph_frame.jpg', 'Fiesta de Reyes Magos')">
+      <div class="photo-wrap">
+        <img src="첫만남 하나/latidos_reyes_casph_frame.jpg" alt="Fiesta de Reyes Magos" />
+      </div>
+    </div>
+
+    <!-- Card 2: Face painting children with Latidos banner (HERO) -->
+    <div class="photo-card-item featured" onclick="openModal('첫만남 하나/latidos_reyes_facepainting.jpg', 'Pintucaritas con los niños')">
+      <div class="photo-wrap">
+        <img src="첫만남 하나/latidos_reyes_facepainting.jpg" alt="Pintucaritas con los niños" />
+      </div>
+    </div>
+
+    <!-- Card 3: Activity & craft table -->
+    <div class="photo-card-item" onclick="openModal('첫만남 하나/latidos_reyes_casph_02.jpg', 'Talleres de creatividad')">
+      <div class="photo-wrap">
+        <img src="첫만남 하나/latidos_reyes_casph_02.jpg" alt="Talleres de creatividad" />
+      </div>
+    </div>
+  </div>
+
+  <div class="org-line">
+    <span class="t" data-es="Historia y Contexto" data-en="History &amp; Context" data-ko="역사와 배경">Historia y Contexto</span>
+    <span class="sep"></span>
+    <span>Fiesta de Reyes Magos · Enero 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 3 — PÁGINA ADICIONAL (EN BLANCO)
+═══════════════════════════════════════ -->
+<div class="slide bg-a" id="s0c">
+  <div class="top-bar"></div>
+  <p class="eyebrow t"
+     data-es="El primer encuentro con Fundación Latidos"
+     data-en="First Encounter with Fundación Latidos"
+     data-ko="라티도스와의 첫만남">
+    El primer encuentro con Fundación Latidos
+  </p>
+  <h2 class="sh t"
+      data-es="Fiesta de <span class='gold'>Reyes Magos</span>"
+      data-en="Three Kings Day <span class='gold'>Celebration</span>"
+      data-ko="동방박사의 날 <span class='gold'>축제</span>">
+    Fiesta de <span class="gold">Reyes Magos</span>
+  </h2>
+  <p class="lead t"
+     data-es="Pintamos caritas a los niños, compartimos sonrisas y nació un lazo que continúa hasta hoy."
+     data-en="Painting faces and sharing smiles began a bond that continues to this day."
+     data-ko="아이들에게 페이스페인팅을 해주고 미소를 나누며 시작된 인연이 오늘날까지 이어집니다.">
+    Pintamos caritas a los niños, compartimos sonrisas y nació un lazo que continúa hasta hoy.
+  </p>
+  <div class="photo-grid-3">
+    <!-- Card 1: Face painting 1 -->
+    <div class="photo-card-item" onclick="openModal('images/facepainting_1.jpg', 'Pintucaritas con los niños')">
+      <div class="photo-wrap">
+        <img src="images/facepainting_1.jpg" alt="Pintucaritas con los niños" />
+      </div>
+    </div>
+
+    <!-- Card 2: Face painting 2 (featured) -->
+    <div class="photo-card-item featured" onclick="openModal('images/facepainting_2.jpg', 'Sonrisas y alegría compartida')">
+      <div class="photo-wrap">
+        <img src="images/facepainting_2.jpg" alt="Sonrisas y alegría compartida" />
+      </div>
+    </div>
+
+    <!-- Card 3: Face painting 3 -->
+    <div class="photo-card-item" onclick="openModal('images/facepainting_3.jpg', 'Momentos de cercanía')">
+      <div class="photo-wrap">
+        <img src="images/facepainting_3.jpg" alt="Momentos de cercanía" />
+      </div>
+    </div>
+  </div>
+  <div class="org-line">
+    <span class="t" data-es="Historia y Contexto" data-en="History &amp; Context" data-ko="역사와 배경">Historia y Contexto</span>
+    <span class="sep"></span>
+    <span>Fiesta de Reyes Magos · Enero 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 4 — ACTIVIDADES Y TUTORÍAS (FOTOS)
+═══════════════════════════════════════ -->
+<div class="slide bg-b" id="s0d">
+  <div class="top-bar"></div>
+  <p class="eyebrow t"
+     data-es="El lazo que continúa con los niños"
+     data-en="The Continuing Connection with Children"
+     data-ko="계속되는 아이들과의 만남">
+    El lazo que continúa con los niños
+  </p>
+  <h2 class="sh t"
+      data-es="Tutorías Académicas y <span class='gold'>Acompañamiento</span>"
+      data-en="Academic Tutoring &amp; <span class='gold'>Mentorship</span>"
+      data-ko="학업 봉사활동과 <span class='gold'>지속적인 동행</span>">
+    Tutorías Académicas y <span class="gold">Acompañamiento</span>
+  </h2>
+  <p class="lead t"
+     data-es="Cada sábado nos reunimos para aprender y compartir sonrisas,<br/>fortaleciendo nuestro vínculo con los niños semana a semana."
+     data-en="Every Saturday we gather to learn and share smiles,<br/>strengthening our bond with the children week after week."
+     data-ko="매주 토요일 아이들과 함께 모여 공부하고 미소를 나누며,<br/>함께하는 시간만큼 우리의 유대도 매주 깊어졌습니다.">
+    Cada sábado nos reunimos para aprender y compartir sonrisas,<br/>fortaleciendo nuestro vínculo con los niños semana a semana.
+  </p>
+
+  <div class="photo-grid-3">
+    <!-- Card 1: Study session table (4-1.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide4_1.jpg', 'Tutorías académicas y sesiones de estudio')">
+      <div class="photo-wrap">
+        <img src="images/slide4_1.jpg" alt="Tutorías académicas y sesiones de estudio" />
+      </div>
+    </div>
+
+    <!-- Card 2: Math problem exercises (4-2.jpg, featured) -->
+    <div class="photo-card-item featured" onclick="openModal('images/slide4_2.jpg', 'Práctica matemática y resolución de ejercicios')">
+      <div class="photo-wrap">
+        <img src="images/slide4_2.jpg" alt="Práctica matemática y resolución de ejercicios" />
+      </div>
+    </div>
+
+    <!-- Card 3: Volunteer guiding kids with Latidos banner (4-3.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide4_3.jpg', 'Acompañamiento cercano con Fundación Latidos')">
+      <div class="photo-wrap">
+        <img src="images/slide4_3.jpg" alt="Acompañamiento cercano con Fundación Latidos" />
+      </div>
+    </div>
+  </div>
+
+  <div class="org-line">
+    <span class="t" data-es="Voluntariado y Mentoría" data-en="Volunteering &amp; Mentorship" data-ko="봉사활동과 멘토링">Voluntariado y Mentoría</span>
+    <span class="sep"></span>
+    <span>Tutorías de los Sábados · Heartitude × Latidos</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 5 — MOMENTOS ESPECIALES Y APRENDE CON LATIDOS (FOTOS)
+═══════════════════════════════════════ -->
+<div class="slide bg-a" id="s0e">
+  <div class="top-bar"></div>
+  <p class="eyebrow t"
+     data-es="Parte de la familia Fundación Latidos"
+     data-en="Deepening Our Bond as Part of Latidos"
+     data-ko="깊어가는 라티도스의 일원으로서">
+    Parte de la familia Fundación Latidos
+  </p>
+  <h2 class="sh t"
+      data-es="Momentos en Familia y <span class='gold'>un Futuro de Aprendizaje</span>"
+      data-en="Moments as a Family &amp; <span class='gold'>a Gift of Learning</span>"
+      data-ko="가족으로 함께 나눈 추억과 <span class='gold'>아이들을 위한 배움의 선물</span>">
+    Momentos en Familia y <span class="gold">un Futuro de Aprendizaje</span>
+  </h2>
+  <p class="lead t" style="max-width: 1200px;"
+     data-es="Celebramos los cumpleaños juntos sintiéndonos una verdadera familia,<br/>y desarrollamos una app educativa para acompañar el futuro de los niños."
+     data-en="Celebrating birthdays together, we became a true part of the Latidos family,<br/>developing an interactive educational app to empower the children's future."
+     data-ko="아이들의 생일을 함께 축하하며 어느덧 라티도스의 진정한 가족이 되었고,<br/>아이들의 미래를 위해 맞춤형 교육 앱을 개발하고 참여 수업을 함께했습니다.">
+    Celebramos los cumpleaños juntos sintiéndonos una verdadera familia,<br/>y desarrollamos una app educativa para acompañar el futuro de los niños.
+  </p>
+
+  <div class="photo-grid-3">
+    <!-- Card 1: Birthday celebration in Casita Latidos (slide5_1.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide5_1.jpg', 'Celebración de Cumpleaños en Casita Latidos')">
+      <div class="photo-wrap">
+        <img src="images/slide5_1.jpg" alt="Celebración de Cumpleaños en Casita Latidos" style="object-position: center 30%;" />
+      </div>
+    </div>
+
+    <!-- Card 2: Educational App - Heartitude x Latidos Niños (slide5_2.jpg, featured) -->
+    <div class="photo-card-item featured" onclick="openModal('images/slide5_2.jpg', 'App Educativa: Heartitude × Latidos Niños')">
+      <div class="photo-wrap photo-wrap-app">
+        <img src="images/slide5_2.jpg" alt="App Educativa: Heartitude × Latidos Niños" class="app-screenshot" />
+      </div>
+    </div>
+
+    <!-- Card 3: Interactive Math Session on TV Screen (slide5_3.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide5_3.jpg', 'Clases Interactivas de Matemáticas con Pantalla Digital')">
+      <div class="photo-wrap">
+        <img src="images/slide5_3.jpg" alt="Clases Interactivas de Matemáticas con Pantalla Digital" style="object-position: center center;" />
+      </div>
+    </div>
+  </div>
+
+  <div class="org-line">
+    <span class="t" data-es="Familia Latidos y Compromiso Educativo" data-en="Latidos Family &amp; Educational Commitment" data-ko="라티도스 가족과 교육적 동행">Familia Latidos y Compromiso Educativo</span>
+    <span class="sep"></span>
+    <span>Casita Latidos &amp; Heartitude · 2026</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 6 — HOSPITAL DEL NIÑO Y LA CARGA ADMINISTRATIVA (FOTOS)
+═══════════════════════════════════════ -->
+<div class="slide bg-b" id="s0f">
+  <div class="top-bar"></div>
+  <p class="eyebrow t"
+     data-es="La realidad que encontramos en el hospital"
+     data-en="The Reality We Witnessed at the Hospital"
+     data-ko="병원 현장에서 마주한 현실">
+    La realidad que encontramos en el hospital
+  </p>
+  <h2 class="sh t"
+      data-es="Entrega en el Hospital y <span class='gold'>la Carga Administrativa</span>"
+      data-en="Hospital Dedication &amp; <span class='gold'>the Weight of Paperwork</span>"
+      data-ko="아이들을 위한 헌신과 <span class='gold'>행정 업무의 무게</span>">
+    Entrega en el Hospital y <span class="gold">la Carga Administrativa</span>
+  </h2>
+  <p class="lead t" style="max-width: 1350px;"
+     data-es="La hermosa labor de Latidos llevaba esperanza al Hospital del Niño,<br/>pero su valioso tiempo se consumía en tareas administrativas."
+     data-en="Latidos' beautiful mission brought hope and care to Hospital del Niño,<br/>yet precious time for the children was consumed by administrative tasks."
+     data-ko="가장 아름다운 단체인 라티도스의 따뜻한 손길이 병원에 닿고 있었지만,<br/>아이들 곁에 머물러야 할 소중한 시간이 행정 업무에 빼앗기고 있었습니다.">
+    La hermosa labor de Latidos llevaba esperanza al Hospital del Niño,<br/>pero su valioso tiempo se consumía en tareas administrativas.
+  </p>
+
+  <div class="photo-grid-3">
+    <!-- Card 1: Hospital del Niño Entrance (slide6_1.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide6_1.jpg', 'Hospital del Niño · Entrada y Visita')">
+      <div class="photo-wrap">
+        <img src="images/slide6_1.jpg" alt="Hospital del Niño · Entrada y Visita" style="object-position: center top;" />
+      </div>
+    </div>
+
+    <!-- Card 2: Latidos Volunteer Team at Hospital (slide6_2.jpg, featured) -->
+    <div class="photo-card-item featured" onclick="openModal('images/slide6_2.jpg', 'Entrega de insumos en el Hospital del Niño')">
+      <div class="photo-wrap">
+        <img src="images/slide6_2.jpg" alt="Entrega de insumos en el Hospital del Niño" style="object-position: center center;" />
+      </div>
+    </div>
+
+    <!-- Card 3: Manual Paperwork on Clipboard in Hallway (slide6_3.jpg) -->
+    <div class="photo-card-item" onclick="openModal('images/slide6_3.jpg', 'Registro manual de pacientes e insumos en el hospital')">
+      <div class="photo-wrap">
+        <img src="images/slide6_3.jpg" alt="Registro manual de pacientes e insumos en el hospital" style="object-position: center 20%;" />
+      </div>
+    </div>
+  </div>
+
+  <div class="org-line">
+    <span class="t" data-es="Apoyo Hospitalario y Retos Operativos" data-en="Hospital Support &amp; Operational Challenges" data-ko="병원 구호 활동과 현장의 과제">Apoyo Hospitalario y Retos Operativos</span>
+    <span class="sep"></span>
+    <span>Hospital del Niño · Fundación Latidos</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════
+     SLIDE 7 — EL ORIGEN (BACKGROUND)
+═══════════════════════════════════════ -->
+<div class="slide bg-a" id="s1">
   <div class="top-bar"></div>
   <p class="eyebrow t" data-es="Por qué lo construimos" data-en="Why We Built It" data-ko="구축 배경">Por qué lo construimos</p>
   <h2 class="sh t"
@@ -513,10 +1059,11 @@
     <div class="tl-item">
       <div class="tl-line"></div>
       <div class="tl-content">
-        <div class="tl-title t" data-es="La organización más hermosa de Panamá: Latidos" data-en="Panama's Most Beautiful Organization: Latidos">La organización más hermosa de Panamá: Latidos</div>
+        <div class="tl-title t" data-es="La organización más hermosa de Panamá: Latidos" data-en="Panama's Most Beautiful Organization: Latidos" data-ko="파나마에서 가장 아름다운 단체, 라티도스">La organización más hermosa de Panamá: Latidos</div>
         <p class="tl-desc t"
            data-es="A través del voluntariado, descubrimos la hermosa dedicación de Latidos. Para estar más presentes con estos niños, fundé Heartitude — un club escolar nacido de ese deseo."
-           data-en="Through volunteer work, we discovered Latidos' beautiful dedication. To be more present with these children, I founded Heartitude — a school club born from that desire.">
+           data-en="Through volunteer work, we discovered Latidos' beautiful dedication. To be more present with these children, I founded Heartitude — a school club born from that desire."
+           data-ko="봉사활동을 통해 라티도스의 아름다운 헌신을 알게 되었고, 이 아이들 곁에 더 있고 싶어 학교에서 Heartitude 클럽을 만들었습니다.">
           A través del voluntariado, descubrimos la hermosa dedicación de Latidos. Para estar más presentes con estos niños, fundé Heartitude — un club escolar nacido de ese deseo.
         </p>
       </div>
@@ -524,26 +1071,27 @@
     <div class="tl-item">
       <div class="tl-line"></div>
       <div class="tl-content">
-        <div class="tl-title t" data-es="¿Cómo multiplicar este bien?" data-en="How Can We Do Even More Good?">¿Cómo multiplicar este bien?</div>
+        <div class="tl-title t" data-es="¿Cómo multiplicar este bien?" data-en="How Can We Do Even More Good?" data-ko="어떻게 이 선행을 더욱 크게 키울 수 있을까?">¿Cómo multiplicar este bien?</div>
         <p class="tl-desc t"
            data-es="La respuesta era clara: estando más presentes con los niños. Pero el tiempo valioso del equipo de Latidos estaba siendo consumido por tareas administrativas."
-           data-en="The answer was clear: being more present with the children. But the Latidos team's precious time was being consumed by administrative tasks.">
+           data-en="The answer was clear: being more present with the children. But the Latidos team's precious time was being consumed by administrative tasks."
+           data-ko="답은 명확했습니다: 아이들 곁에 더 많이 있는 것. 하지만 라티도스 팀의 소중한 시간이 행정 업무에 빼앗기고 있었습니다.">
           La respuesta era clara: estando más presentes con los niños. Pero el tiempo valioso del equipo de Latidos estaba siendo consumido por tareas administrativas.
         </p>
       </div>
     </div>
   </div>
   <div class="org-line">
-    <span class="t" data-es="Historia y Contexto" data-en="History &amp; Context">Historia y Contexto</span>
+    <span class="t" data-es="Historia y Contexto" data-en="History &amp; Context" data-ko="역사와 배경">Historia y Contexto</span>
     <span class="sep"></span>
     <span>Heartitude × Fundación Latidos · 2025–2026</span>
   </div>
 </div>
 
 <!-- ═══════════════════════════════════════
-     SLIDE 3 — LA RESPUESTA
+     SLIDE 8 — LA RESPUESTA
 ═══════════════════════════════════════ -->
-<div class="slide bg-a" id="s2">
+<div class="slide bg-b" id="s2">
   <div class="top-bar"></div>
   <p class="eyebrow t" data-es="La respuesta" data-en="The Answer">La respuesta</p>
   <h2 class="sh t"
@@ -605,7 +1153,7 @@
 </div>
 
 <!-- ═══════════════════════════════════════
-     SLIDE 3B — EL CAMINO QUE RECORRIMOS JUNTOS
+     SLIDE 9 — EL CAMINO QUE RECORRIMOS JUNTOS
 ═══════════════════════════════════════ -->
 <div class="slide bg-a" id="s2c">
   <div class="top-bar"></div>
@@ -669,7 +1217,7 @@
 </div>
 
 <!-- ═══════════════════════════════════════
-     SLIDE 3C — LO QUE NOS HACE ÚNICOS
+     SLIDE 10 — UNA PLATAFORMA DISEÑADA SOLO PARA LATIDOS
 ═══════════════════════════════════════ -->
 <div class="slide bg-b" id="s2b">
   <div class="top-bar"></div>
@@ -770,17 +1318,37 @@
 
 <!-- NAV -->
 <div id="nav">
-  <button class="nav-btn t" id="btn-prev" data-es="Anterior" data-en="Previous">Anterior</button>
+  <button class="nav-btn t" id="btn-prev" data-es="Anterior" data-en="Previous" data-ko="이전">Anterior</button>
   <div class="vsep"></div>
   <div class="dot-row" id="dot-row"></div>
   <div class="vsep"></div>
-  <span id="slide-ctr">1 / 10</span>
+  <span id="slide-ctr">1 / 7</span>
   <div class="vsep"></div>
-  <button class="nav-btn t" id="btn-next" data-es="Siguiente" data-en="Next">Siguiente</button>
+  <button class="nav-btn t" id="btn-next" data-es="Siguiente" data-en="Next" data-ko="다음">Siguiente</button>
+  <div class="vsep"></div>
+  <button class="nav-btn fs-btn" id="btn-fs" title="Pantalla completa (F)" onclick="toggleFullscreen()">
+    <span class="fs-icon">⛶</span>
+    <span class="t" data-es="Pantalla Completa" data-en="Fullscreen" data-ko="전체화면">Pantalla Completa</span>
+  </button>
+  <div class="vsep"></div>
+  <div id="lang">
+    <button class="lb on" onclick="setLang('es')">ES</button>
+    <button class="lb" onclick="setLang('en')">EN</button>
+    <button class="lb" onclick="setLang('ko')">KO</button>
+  </div>
 </div>
 <div id="hint">
-  <span class="t" data-es="← → Cambiar diapositiva" data-en="← → Change slide">← → Cambiar diapositiva</span><br/>
-  <span class="t" data-es="F · Pantalla completa" data-en="F · Fullscreen">F · Pantalla completa</span>
+  <span class="t" data-es="← → Cambiar diapositiva" data-en="← → Change slide" data-ko="← → 슬라이드 이동">← → Cambiar diapositiva</span><br/>
+  <span class="t" data-es="F · Pantalla completa" data-en="F · Fullscreen" data-ko="F · 전체화면">F · Pantalla completa</span>
+</div>
+
+<!-- PHOTO LIGHTBOX MODAL -->
+<div id="photo-modal" class="photo-modal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <button class="modal-close" onclick="closeModal()" title="Cerrar">&times;</button>
+    <img id="modal-img" src="" alt="Foto ampliada" />
+    <div id="modal-caption" class="modal-caption"></div>
+  </div>
 </div>
 
 <style>
@@ -824,6 +1392,9 @@ function goTo(idx) {
   slides[idx].classList.add('active');
   slides[idx].scrollTop = 0; // Reset scroll position on mobile
   cur = idx; ui();
+  if (slides[idx].id) {
+    try { history.replaceState(null, null, '#' + slides[idx].id); } catch(e){}
+  }
   // trigger animations
   if (cur === 6) setTimeout(() => { document.querySelectorAll('#s6 .ur-fill').forEach(el => el.style.width = el.dataset.w); }, 260);
   if (cur === 7) setTimeout(() => { document.querySelectorAll('#s7 .crow-fill').forEach(el => el.style.width = el.dataset.w); }, 260);
@@ -836,10 +1407,88 @@ const prev = () => goTo(cur-1);
 document.getElementById('btn-next').addEventListener('click', next);
 document.getElementById('btn-prev').addEventListener('click', prev);
 document.addEventListener('keydown', e => {
+  const modal = document.getElementById('photo-modal');
+  if (e.key === 'Escape') {
+    if (modal && modal.classList.contains('open')) {
+      closeModal();
+      return;
+    }
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
+      const efs = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+      if (efs) {
+        try { efs.call(document); } catch(err){}
+      }
+      return;
+    }
+  }
+  if (modal && modal.classList.contains('open')) return;
   if (e.key==='ArrowRight'||e.key===' '){e.preventDefault();next();}
   if (e.key==='ArrowLeft'){e.preventDefault();prev();}
-  if (e.key==='f'||e.key==='F'){if(!document.fullscreenElement)document.documentElement.requestFullscreen();else document.exitFullscreen();}
+  if (e.key==='f'||e.key==='F'){toggleFullscreen();}
 });
+
+function toggleFullscreen() {
+  const elem = document.documentElement;
+  const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+  if (!isFs) {
+    const rfs = elem.requestFullscreen || elem.webkitRequestFullscreen || elem.mozRequestFullScreen || elem.msRequestFullscreen;
+    if (rfs) {
+      try {
+        const p = rfs.call(elem);
+        if (p && p.catch) p.catch(err => console.warn(err));
+      } catch(e) { console.warn(e); }
+    }
+  } else {
+    const efs = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen || document.msExitFullscreen;
+    if (efs) {
+      try {
+        const p = efs.call(document);
+        if (p && p.catch) p.catch(err => console.warn(err));
+      } catch(e) { console.warn(e); }
+    }
+  }
+}
+
+['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+  document.addEventListener(evt, () => {
+    const btn = document.getElementById('btn-fs');
+    if (!btn) return;
+    const isFs = !!(document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement);
+    const icon = btn.querySelector('.fs-icon');
+    if (icon) icon.textContent = isFs ? '🗗' : '⛶';
+    const textSpan = btn.querySelector('.t');
+    if (textSpan) {
+      if (isFs) {
+        textSpan.dataset.es = "Salir";
+        textSpan.dataset.en = "Exit";
+        textSpan.dataset.ko = "전체화면 종료";
+        textSpan.textContent = lang === 'ko' ? '전체화면 종료' : (lang === 'en' ? 'Exit' : 'Salir');
+      } else {
+        textSpan.dataset.es = "Pantalla Completa";
+        textSpan.dataset.en = "Fullscreen";
+        textSpan.dataset.ko = "전체화면";
+        textSpan.textContent = lang === 'ko' ? '전체화면' : (lang === 'en' ? 'Fullscreen' : 'Pantalla Completa');
+      }
+    }
+    btn.title = isFs ? (lang === 'ko' ? '전체화면 종료 (F)' : lang === 'en' ? 'Exit Fullscreen (F)' : 'Salir de pantalla completa (F)')
+                     : (lang === 'ko' ? '전체화면 (F)' : lang === 'en' ? 'Fullscreen (F)' : 'Pantalla completa (F)');
+  });
+});
+
+function openModal(src, caption) {
+  const m = document.getElementById('photo-modal');
+  const img = document.getElementById('modal-img');
+  const cap = document.getElementById('modal-caption');
+  if (!m || !img) return;
+  img.src = src;
+  cap.textContent = caption || '';
+  m.classList.add('open');
+}
+
+function closeModal() {
+  const m = document.getElementById('photo-modal');
+  if (m) m.classList.remove('open');
+}
 
 let tx = 0, ty = 0;
 document.addEventListener('touchstart', e => {
@@ -855,7 +1504,19 @@ document.addEventListener('touchend', e => {
     dx < 0 ? next() : prev();
   }
 }, {passive:true});
+
 ui();
+const urlParams = new URLSearchParams(window.location.search);
+const targetId = urlParams.get('slide') || urlParams.get('s') || window.location.hash.slice(1);
+if (targetId) {
+  const targetIdx = Array.from(slides).findIndex(s => s.id === targetId || s.id === 's' + targetId);
+  if (targetIdx !== -1) {
+    slides[cur].classList.remove('active');
+    slides[targetIdx].classList.add('active');
+    cur = targetIdx;
+    ui();
+  }
+}
 
 /* ── LANGUAGE TOGGLE ── */
 let lang = 'es';
@@ -892,7 +1553,47 @@ window.addEventListener('load', () => {
     ['Plataforma digital integrada que centraliza la gestión clínica, el apoyo y el voluntariado de Fundación Latidos — devolviendo más tiempo al equipo para estar con los niños.','Fundación Latidos의 임상 관리, 후원, 봉사활동을 하나로 통합하는 디지털 플랫폼 — 더 많은 시간을 아이들 곳으로 돌려주기 위해.'],
     ['Sábado 12 de Septiembre, 2026 · 10:00 AM','2026년 9월 12일 토요일 · 오전 10:00'],
     ['Presentación Institucional · Uso Interno','기관 발표자료 · 내부 사용'],
-    // Slide 2 — El Origen
+    // Slide 2 — El Primer Encuentro (Fotos)
+    ['El primer encuentro con Fundación Latidos','라티도스와의 첫만남'],
+    ["Fiesta de <span class='gold'>Reyes Magos</span>","동방박사의 날 <span class='gold'>축제</span>"],
+    ['En enero de 2026, participamos en familia con Fundación Latidos.','2026년 1월, 라티도스 재단의 축제에 가족과 함께 참석했습니다.'],
+    ['👑 Fiesta de Reyes Magos','👑 동방박사의 날 축제'],
+    ['Celebración comunitaria con las familias de Latidos','라티도스 가족들과 함께한 축제의 장'],
+    ['🎨 Pintucaritas con los niños','🎨 아이들과 함께한 페이스페인팅'],
+    ['Pintando caritas y compartiendo regalos con los niños','가족과 함께 아이들의 얼굴에 그림을 선물했던 시간'],
+    ['✨ Alegría y talleres','✨ 공작 및 미술 활동'],
+    ['Talleres de creatividad y momentos de cercanía','아이들과 가까이서 호흡한 따뜻한 교감의 순간'],
+
+    ['Pintamos caritas a los niños, compartimos sonrisas y nació un lazo que continúa hasta hoy.','아이들에게 페이스페인팅을 해주고 미소를 나누며 시작된 인연이 오늘날까지 이어집니다.'],
+    ['Fotos adicionales de la Fiesta de Reyes Magos','동방박사의 날 추가 사진 배치 공간'],
+    // Slide 4 — Encuentro Continuo y Tutorías (Fotos)
+    ['El lazo que continúa con los niños','계속되는 아이들과의 만남'],
+    ["Tutorías Académicas y <span class='gold'>Acompañamiento</span>","학업 봉사활동과 <span class='gold'>지속적인 동행</span>"],
+    ['Cada sábado nos reunimos para aprender y compartir sonrisas,<br/>fortaleciendo nuestro vínculo con los niños semana a semana.','매주 토요일 아이들과 함께 모여 공부하고 미소를 나누며,<br/>함께하는 시간만큼 우리의 유대도 매주 깊어졌습니다.'],
+    ['Tutorías académicas y sesiones de estudio','학습 세션과 수학 튜터링'],
+    ['Práctica matemática y resolución de ejercicios','함께 풀어가는 수학 문제 풀이'],
+    ['Acompañamiento cercano con Fundación Latidos','라티도스 재단과 함께하는 따뜻한 학습 지도'],
+    ['Voluntariado y Mentoría','봉사활동과 멘토링'],
+
+    // Slide 5 — Parte de la Familia y Compromiso (Fotos)
+    ['Parte de la familia Fundación Latidos','깊어가는 라티도스의 일원으로서'],
+    ["Momentos en Familia y <span class='gold'>un Futuro de Aprendizaje</span>","가족으로 함께 나눈 추억과 <span class='gold'>아이들을 위한 배움의 선물</span>"],
+    ['Celebramos los cumpleaños juntos sintiéndonos una verdadera familia,<br/>y desarrollamos una app educativa para acompañar el futuro de los niños.','아이들의 생일을 함께 축하하며 어느덧 라티도스의 진정한 가족이 되었고,<br/>아이들의 미래를 위해 맞춤형 교육 앱을 개발하고 참여 수업을 함께했습니다.'],
+    ['Celebración de Cumpleaños en Casita Latidos','라티도스 생일 축하 파티'],
+    ['App Educativa: Heartitude × Latidos Niños','라티도스 어린이 수학 모험 앱 (Heartitude 개발)'],
+    ['Clases Interactivas de Matemáticas con Pantalla Digital','대형 화면을 활용한 디지털 수학 참여 수업'],
+    ['Familia Latidos y Compromiso Educativo','라티도스 가족과 교육적 동행'],
+
+    // Slide 6 — Hospital del Niño y Carga Administrativa (Fotos)
+    ['La realidad que encontramos en el hospital','병원 현장에서 마주한 현실'],
+    ["Entrega en el Hospital y <span class='gold'>la Carga Administrativa</span>","아이들을 위한 헌신과 <span class='gold'>행정 업무의 무게</span>"],
+    ['La hermosa labor de Latidos llevaba esperanza al Hospital del Niño,<br/>pero su valioso tiempo se consumía en tareas administrativas.','가장 아름다운 단체인 라티도스의 따뜻한 손길이 병원에 닿고 있었지만,<br/>아이들 곁에 머물러야 할 소중한 시간이 행정 업무에 빼앗기고 있었습니다.'],
+    ['Hospital del Niño · Entrada y Visita','Hospital del Niño 소아 병원 현장 방문'],
+    ['Entrega de insumos en el Hospital del Niño','Hospital del Niño 앞 구호물품을 전달하는 라티도스 봉사팀'],
+    ['Registro manual de pacientes e insumos en el hospital','병원 복도에서 수기로 환자 정보와 물품을 기록하는 모습'],
+    ['Apoyo Hospitalario y Retos Operativos','병원 구호 활동과 현장의 과제'],
+
+    // Slide 7 — El Origen (Timeline)
     ['Por qué lo construimos','왜 만들었는가'],
     ['El Origen de','이 프로젝트의'],
     ['Este Proyecto','시작 배경'],
@@ -1079,6 +1780,7 @@ window.addEventListener('load', () => {
     // Nav & hint
     ['Anterior','이전'],
     ['Siguiente','다음'],
+    ['Pantalla','전체화면'],
     ['← → Cambiar diapositiva','← → 슬라이드 이동'],
     ['F · Pantalla completa','F · 전체화면'],
   ];
@@ -1094,6 +1796,11 @@ window.addEventListener('load', () => {
       el.dataset.ko = koMap[es];
     }
   });
+
+  const initialLang = urlParams.get('lang');
+  if (initialLang && ['es', 'en', 'ko'].includes(initialLang.toLowerCase())) {
+    setLang(initialLang.toLowerCase());
+  }
 });
 </script>
 </body>

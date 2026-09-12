@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fundación Latidos — Panel de Datos 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --navy: #0b1628; --navy2: #0f1e38; --navy3: #162444; --navy4: #1a2d52;
+      --gold: #c9a84c; --gold2: #e8c96d; --gold3: #f5e4b0;
+      --white: #f8f6f0; --off: #e8e4dc; --muted: #8a9bb8; --dim: #4a5a78;
+      --line: rgba(201,168,76,.18); --card: rgba(255,255,255,.04);
+      --red: #e85d5d; --green: #5dcc8a; --blue: #5d9de8; --purple: #a77de8;
+      --orange: #e8a55d; --cyan: #5dccc8;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--navy); color: var(--white); min-height: 100vh; line-height: 1.6; }
+
+    .dash-header { padding: 40px 48px 28px; background: linear-gradient(165deg, var(--navy2) 0%, var(--navy) 100%); border-bottom: 1px solid var(--line); position: relative; }
+    .dash-header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, transparent, var(--gold) 35%, var(--gold2) 65%, transparent); opacity: .55; }
+    .header-row { display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+    .header-eyebrow { font-size: .78rem; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); margin-bottom: 8px; display: flex; align-items: center; gap: 10px; }
+    .header-eyebrow::before { content: ''; width: 20px; height: 1px; background: var(--gold); opacity: .5; }
+    .header-h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 3.5vw, 2.6rem); font-weight: 700; line-height: 1.2; }
+    .header-h1 .gold { color: var(--gold2); }
+    .header-sub { font-size: .85rem; color: var(--muted); margin-top: 6px; }
+    .lang-toggle { display: flex; background: rgba(255,255,255,.05); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+    .lang-btn { padding: 6px 14px; font-family: 'Inter', sans-serif; font-size: .72rem; font-weight: 700; letter-spacing: .1em; color: var(--muted); background: none; border: none; cursor: pointer; transition: .25s; }
+    .lang-btn.active { background: var(--gold); color: var(--navy); }
+    .lang-btn:hover:not(.active) { background: rgba(255,255,255,.06); color: var(--white); }
+
+    .kpi-strip { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; background: var(--line); border-bottom: 1px solid var(--line); }
+    .kpi-card { background: var(--navy2); padding: 28px 24px; text-align: center; transition: background .3s; }
+    .kpi-card:hover { background: var(--navy3); }
+    .kpi-num { font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 700; color: var(--gold2); line-height: 1; margin-bottom: 8px; }
+    .kpi-label { font-size: .78rem; font-weight: 600; color: var(--white); margin-bottom: 3px; }
+    .kpi-sub { font-size: .68rem; color: var(--dim); line-height: 1.4; }
+
+    .tab-nav { display: flex; gap: 0; padding: 0 48px; background: var(--navy2); border-bottom: 1px solid var(--line); overflow-x: auto; }
+    .tab-btn { padding: 14px 24px; font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 600; color: var(--dim); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; transition: .2s; white-space: nowrap; }
+    .tab-btn:hover { color: var(--muted); }
+    .tab-btn.active { color: var(--gold2); border-bottom-color: var(--gold); }
+    .tab-panel { display: none; padding: 36px 48px 60px; }
+    .tab-panel.active { display: block; }
+
+    .section-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; margin-bottom: 6px; }
+    .section-desc { font-size: .88rem; color: var(--muted); margin-bottom: 28px; max-width: 700px; }
+
+    .chart-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(380px, 1fr)); gap: 24px; margin-bottom: 32px; }
+    .chart-box { background: var(--navy2); border: 1px solid var(--line); border-radius: 6px; padding: 24px; }
+    .chart-box-title { font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+    .chart-wrap { position: relative; width: 100%; }
+    .chart-wrap.h300 { height: 300px; }
+    .chart-wrap.h350 { height: 350px; }
+
+    .data-table-wrap { background: var(--navy2); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; margin-bottom: 24px; }
+    .data-table-header { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); }
+    .data-table-title { font-size: .72rem; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: var(--gold); }
+    .data-table-count { font-size: .72rem; color: var(--dim); }
+    table.dtable { width: 100%; border-collapse: collapse; font-size: .82rem; }
+    table.dtable th { padding: 10px 14px; text-align: left; font-weight: 600; color: var(--muted); background: var(--navy3); border-bottom: 1px solid var(--line); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; position: sticky; top: 0; z-index: 2; }
+    table.dtable td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,.03); color: var(--off); vertical-align: top; }
+    table.dtable tr:hover td { background: rgba(201,168,76,.03); }
+    .table-scroll { max-height: 420px; overflow-y: auto; }
+    .badge { display: inline-block; padding: 2px 8px; border-radius: 3px; font-size: .68rem; font-weight: 600; }
+    .badge-gold { background: rgba(201,168,76,.15); color: var(--gold2); }
+    .badge-red { background: rgba(232,93,93,.15); color: var(--red); }
+    .badge-green { background: rgba(93,204,138,.15); color: var(--green); }
+    .badge-blue { background: rgba(93,157,232,.15); color: var(--blue); }
+    .badge-purple { background: rgba(167,125,232,.15); color: var(--purple); }
+    .mono { font-family: monospace; }
+
+    .patient-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 16px; margin-bottom: 28px; }
+    .patient-card { background: var(--navy2); border: 1px solid var(--line); border-radius: 6px; padding: 20px; transition: border-color .3s; }
+    .patient-card:hover { border-color: rgba(201,168,76,.4); }
+    .patient-name { font-size: .95rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .patient-age { font-size: .78rem; color: var(--gold2); margin-bottom: 8px; }
+    .patient-dx { font-size: .78rem; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
+    .patient-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+
+    .cross-ref-card { background: var(--navy2); border: 1px solid var(--line); border-radius: 6px; padding: 24px; margin-bottom: 16px; border-left: 3px solid var(--gold); }
+    .cross-ref-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold2); margin-bottom: 12px; }
+    .cross-ref-item { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 8px; }
+    .cross-ref-src { flex-shrink: 0; font-size: .65rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--navy); padding: 3px 8px; border-radius: 3px; min-width: 70px; text-align: center; }
+    .cross-ref-text { font-size: .82rem; color: var(--muted); line-height: 1.5; }
+
+    .alert-box { background: rgba(232,93,93,.06); border: 1px solid rgba(232,93,93,.2); border-left: 3px solid var(--red); border-radius: 6px; padding: 18px 22px; margin-bottom: 24px; }
+    .alert-title { font-size: .82rem; font-weight: 700; color: var(--red); margin-bottom: 6px; }
+    .alert-text { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+
+    .insight-box { background: rgba(201,168,76,.04); border: 1px solid rgba(201,168,76,.18); border-left: 3px solid var(--gold); border-radius: 6px; padding: 18px 22px; margin-bottom: 24px; }
+    .insight-title { font-size: .82rem; font-weight: 700; color: var(--gold2); margin-bottom: 6px; }
+    .insight-text { font-size: .82rem; color: var(--muted); line-height: 1.6; }
+
+    .stat-mini-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .stat-mini { background: var(--navy2); border: 1px solid var(--line); border-radius: 6px; padding: 16px; text-align: center; }
+    .stat-mini-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; color: var(--gold2); }
+    .stat-mini-label { font-size: .72rem; color: var(--muted); margin-top: 4px; }
+
+    .dash-footer { padding: 24px 48px; border-top: 1px solid var(--line); font-size: .72rem; color: var(--dim); text-align: center; }
+
+    @media (max-width: 768px) {
+      .dash-header { padding: 28px 20px 20px; }
+      .tab-nav { padding: 0 16px; }
+      .tab-panel { padding: 24px 16px 48px; }
+      .chart-row { grid-template-columns: 1fr; }
+      .kpi-strip { grid-template-columns: repeat(2, 1fr); }
+      .patient-grid { grid-template-columns: 1fr; }
+      .tab-btn { padding: 12px 16px; font-size: .75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="dash-header">
+  <div class="header-row">
+    <div>
+      <div class="header-eyebrow"><span class="t" data-ko="데이터 분석 대시보드" data-es="Panel de Análisis de Datos">Panel de Análisis de Datos</span></div>
+      <h1 class="header-h1"><span>Fundación Latidos</span> <span class="gold t" data-ko="— 2026년 운영 현황" data-es="— Operaciones 2026">— Operaciones 2026</span></h1>
+      <p class="header-sub t" data-ko="4대 핵심 엑셀 원장의 전수 데이터 분석 · 2025.12 ~ 2026.09" data-es="Análisis completo de 4 registros operativos · Dic 2025 – Sep 2026">Análisis completo de 4 registros operativos · Dic 2025 – Sep 2026</p>
+    </div>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('es')">ES</button>
+      <button class="lang-btn" onclick="setLang('ko')">KO</button>
+    </div>
+  </div>
+</header>
+
+<div class="kpi-strip">
+  <div class="kpi-card"><div class="kpi-num">$79,812</div><div class="kpi-label t" data-ko="총 의료비 청구액" data-es="Total Facturado">Total Facturado</div><div class="kpi-sub t" data-ko="53건 · 약 40명 환아" data-es="53 registros · ~40 pacientes">53 registros · ~40 pacientes</div></div>
+  <div class="kpi-card"><div class="kpi-num">396</div><div class="kpi-label t" data-ko="소모품 배부" data-es="Insumos Entregados">Insumos Entregados</div><div class="kpi-sub t" data-ko="기저귀·물티슈·분유 (1~9월)" data-es="Pañales·Toallitas·Leche (Ene–Sep)">Pañales·Toallitas·Leche (Ene–Sep)</div></div>
+  <div class="kpi-card"><div class="kpi-num">$4,642</div><div class="kpi-label t" data-ko="소액현금 집행" data-es="Caja Menuda">Caja Menuda</div><div class="kpi-sub t" data-ko="179건 · 27회차 정산" data-es="179 gastos · 27 reembolsos">179 gastos · 27 reembolsos</div></div>
+  <div class="kpi-card"><div class="kpi-num">17</div><div class="kpi-label t" data-ko="중증 특수 케어 환아" data-es="Pacientes Críticos">Pacientes Críticos</div><div class="kpi-sub t" data-ko="기관절개 12명 · 와상 5명" data-es="Traqueotomía 12 · Encamados 5">Traqueotomía 12 · Encamados 5</div></div>
+</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" onclick="showTab('overview',this)"><span class="t" data-ko="종합 현황" data-es="Visión General">Visión General</span></button>
+  <button class="tab-btn" onclick="showTab('surgery',this)"><span class="t" data-ko="심장수술 (CCC)" data-es="Cirugías (CCC)">Cirugías (CCC)</span></button>
+  <button class="tab-btn" onclick="showTab('supplies',this)"><span class="t" data-ko="소모품 지원" data-es="Insumos">Insumos</span></button>
+  <button class="tab-btn" onclick="showTab('cashflow',this)"><span class="t" data-ko="소액현금 (Caja)" data-es="Caja Menuda">Caja Menuda</span></button>
+  <button class="tab-btn" onclick="showTab('critical',this)"><span class="t" data-ko="중증 케어" data-es="Cuidado Crítico">Cuidado Crítico</span></button>
+  <button class="tab-btn" onclick="showTab('crossref',this)"><span class="t" data-ko="교차 분석" data-es="Análisis Cruzado">Análisis Cruzado</span></button>
+</nav>
+
+<!-- OVERVIEW -->
+<div class="tab-panel active" id="tab-overview">
+  <h2 class="section-title t" data-ko="종합 운영 현황" data-es="Visión General de Operaciones">Visión General de Operaciones</h2>
+  <p class="section-desc t" data-ko="Fundación Latidos의 4대 핵심 엑셀 원장에서 추출한 운영 데이터입니다." data-es="Resumen de datos operativos extraídos de los 4 registros principales.">Resumen de datos operativos extraídos de los 4 registros principales.</p>
+  <div class="alert-box">
+    <div class="alert-title t" data-ko="⚠ 엑셀 수식 범위 오류 발견" data-es="⚠ Error de fórmula Excel detectado">⚠ Error de fórmula Excel detectado</div>
+    <div class="alert-text t" data-ko="CCC 원장의 =SUM(G14:G57) 수식이 첫 10건을 누락하여 가족 전달액이 $6,137 과소 계상. 실제: $68,292 vs 기록: $62,155." data-es="La fórmula =SUM(G14:G57) omite 10 filas, subestimando $6,137. Real: $68,292 vs Registrado: $62,155.">La fórmula =SUM(G14:G57) omite 10 filas, subestimando $6,137. Real: $68,292 vs Registrado: $62,155.</div>
+  </div>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-box-title t" data-ko="연도별 수술비 집행 추이" data-es="Costos Quirúrgicos por Año">Costos Quirúrgicos por Año</div><div class="chart-wrap h300"><canvas id="chartYearCost"></canvas></div></div>
+    <div class="chart-box"><div class="chart-box-title t" data-ko="월별 소모품 배부 (2026)" data-es="Insumos Mensuales (2026)">Insumos Mensuales (2026)</div><div class="chart-wrap h300"><canvas id="chartMonthlySupplies"></canvas></div></div>
+  </div>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-box-title t" data-ko="소액현금 지출 카테고리" data-es="Categorías de Gasto — Caja Menuda">Categorías de Gasto — Caja Menuda</div><div class="chart-wrap h300"><canvas id="chartCajaCategory"></canvas></div></div>
+    <div class="chart-box"><div class="chart-box-title t" data-ko="월별 신규 환아 등록" data-es="Nuevos Pacientes por Mes">Nuevos Pacientes por Mes</div><div class="chart-wrap h300"><canvas id="chartNewCases"></canvas></div></div>
+  </div>
+</div>
+
+<!-- SURGERY -->
+<div class="tab-panel" id="tab-surgery">
+  <h2 class="section-title t" data-ko="심장수술(CCC) 지원 현황" data-es="Cirugías Cardíacas Congénitas">Cirugías Cardíacas Congénitas</h2>
+  <p class="section-desc t" data-ko="2021~2026년 누적 53건, 약 40명 환아 의료비 지원 내역." data-es="53 registros acumulados, ~40 pacientes únicos.">53 registros acumulados, ~40 pacientes únicos.</p>
+  <div class="stat-mini-row">
+    <div class="stat-mini"><div class="stat-mini-num">$79,812</div><div class="stat-mini-label t" data-ko="총 청구액" data-es="Total Facturado">Total Facturado</div></div>
+    <div class="stat-mini"><div class="stat-mini-num">$9,123</div><div class="stat-mini-label t" data-ko="15% 감면액" data-es="Descuento 15%">Descuento 15%</div></div>
+    <div class="stat-mini"><div class="stat-mini-num">$68,292</div><div class="stat-mini-label t" data-ko="실제 전달액" data-es="Entregado Real">Entregado Real</div></div>
+    <div class="stat-mini"><div class="stat-mini-num">~40</div><div class="stat-mini-label t" data-ko="고유 환아" data-es="Pacientes Únicos">Pacientes Únicos</div></div>
+  </div>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-box-title t" data-ko="연도별 건수 및 금액" data-es="Casos y Montos por Año">Casos y Montos por Año</div><div class="chart-wrap h350"><canvas id="chartSurgeryYear"></canvas></div></div>
+    <div class="chart-box"><div class="chart-box-title t" data-ko="2026년 환아별 누적 지원액 TOP 10" data-es="Top 10 Pacientes 2026">Top 10 Pacientes 2026</div><div class="chart-wrap h350"><canvas id="chartTopPatients"></canvas></div></div>
+  </div>
+  <div class="data-table-wrap"><div class="data-table-header"><div class="data-table-title t" data-ko="전체 수술/지원 내역" data-es="Registro Completo">Registro Completo</div><div class="data-table-count">53 registros</div></div>
+    <div class="table-scroll"><table class="dtable"><thead><tr><th>No.</th><th>Fecha</th><th>Paciente</th><th>Monto ($)</th><th>Entregado ($)</th><th>Padrino</th><th>Provincia</th><th>Nota</th></tr></thead><tbody id="surgeryBody"></tbody></table></div>
+  </div>
+</div>
+
+<!-- SUPPLIES -->
+<div class="tab-panel" id="tab-supplies">
+  <h2 class="section-title t" data-ko="소모품 배부 및 신규 환아" data-es="Insumos y Nuevos Pacientes">Insumos y Nuevos Pacientes</h2>
+  <p class="section-desc t" data-ko="2026년 1~9월 주차별 소모품 배부 및 신규 등록 통계." data-es="Distribución semanal de insumos, enero–septiembre 2026.">Distribución semanal de insumos, enero–septiembre 2026.</p>
+  <div class="stat-mini-row">
+    <div class="stat-mini"><div class="stat-mini-num">125</div><div class="stat-mini-label">Pañales</div></div>
+    <div class="stat-mini"><div class="stat-mini-num">131</div><div class="stat-mini-label">Toallitas</div></div>
+    <div class="stat-mini"><div class="stat-mini-num">140</div><div class="stat-mini-label">Leche</div></div>
+    <div class="stat-mini"><div class="stat-mini-num">52</div><div class="stat-mini-label t" data-ko="신규 환아" data-es="Nuevos Pacientes">Nuevos Pacientes</div></div>
+  </div>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-box-title t" data-ko="월별 품목별 배부 현황" data-es="Insumos por Mes y Tipo">Insumos por Mes y Tipo</div><div class="chart-wrap h350"><canvas id="chartSupplyDetail"></canvas></div></div>
+    <div class="chart-box"><div class="chart-box-title t" data-ko="남녀 비율 (연간 총계)" data-es="Distribución por Género">Distribución por Género</div><div class="chart-wrap h350"><canvas id="chartGender"></canvas></div></div>
+  </div>
+  <div class="insight-box"><div class="insight-title">📊 Columnas Ocultas Descubiertas</div><div class="insight-text t" data-ko="엑셀 Col 15~26에 정부 공문, 병원별 수술 집계, 쉼터 기부 입고 통계 열이 숨겨져 있었습니다." data-es="Col 15–26: cartas al gobierno, cirugías por hospital, donaciones en la Casita.">Col 15–26: cartas al gobierno, cirugías por hospital, donaciones en la Casita.</div></div>
+</div>
+
+<!-- CASH FLOW -->
+<div class="tab-panel" id="tab-cashflow">
+  <h2 class="section-title t" data-ko="소액현금 (Caja Menuda)" data-es="Caja Menuda — Flujo de Efectivo">Caja Menuda — Flujo de Efectivo</h2>
+  <p class="section-desc t" data-ko="전도금 $200 한도, 27회차 회전 정산, 179건 총 $4,641.52." data-es="Fondo fijo de $200, 27 reembolsos, 179 gastos, total $4,641.52.">Fondo fijo de $200, 27 reembolsos, 179 gastos, total $4,641.52.</p>
+  <div class="chart-row">
+    <div class="chart-box"><div class="chart-box-title t" data-ko="카테고리별 지출" data-es="Gasto por Categoría">Gasto por Categoría</div><div class="chart-wrap h350"><canvas id="chartCajaDetail"></canvas></div></div>
+    <div class="chart-box"><div class="chart-box-title t" data-ko="최다 수령 보호자 TOP 10" data-es="Top 10 Beneficiarios">Top 10 Beneficiarios</div><div class="chart-wrap h350"><canvas id="chartCajaTop"></canvas></div></div>
+  </div>
+  <div class="insight-box"><div class="insight-title t" data-ko="🚌 교통비 지원의 의미" data-es="🚌 Significado del Transporte">🚌 Significado del Transporte</div><div class="insight-text t" data-ko="전체 지출의 39.3%($1,822)가 지방 환아의 아동병원 통원 교통비. 68건의 영수증 하나하나가 '그 엄마가 아이를 데리고 수도까지 왔다'는 이야기입니다." data-es="39.3% ($1,822) para transporte. Cada uno de los 68 recibos cuenta la historia de una madre que viajó con su hijo hasta la capital.">39.3% ($1,822) para transporte. Cada recibo cuenta la historia de una madre que viajó con su hijo.</div></div>
+</div>
+
+<!-- CRITICAL CARE -->
+<div class="tab-panel" id="tab-critical">
+  <h2 class="section-title t" data-ko="중증 특수 케어 환아" data-es="Pacientes en Cuidado Crítico">Pacientes en Cuidado Crítico</h2>
+  <p class="section-desc t" data-ko="호흡 보조 및 상시 간병이 필요한 최고 중증도 환아 17명." data-es="17 pacientes que requieren asistencia respiratoria y cuidado continuo.">17 pacientes que requieren asistencia respiratoria y cuidado continuo.</p>
+  <h3 style="font-size:.78rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:16px">Traqueotomía — 12 Pacientes</h3>
+  <div class="patient-grid" id="traqueoGrid"></div>
+  <h3 style="font-size:.78rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin:28px 0 16px">Encamados — 5 Pacientes</h3>
+  <div class="patient-grid" id="encamadosGrid"></div>
+</div>
+
+<!-- CROSS REFERENCE -->
+<div class="tab-panel" id="tab-crossref">
+  <h2 class="section-title t" data-ko="교차 분석 — 데이터 파편화" data-es="Análisis Cruzado — Fragmentación">Análisis Cruzado — Fragmentación de Datos</h2>
+  <p class="section-desc t" data-ko="동일 환아의 기록이 4개 엑셀에 어떻게 흩어져 있는지 보여주는 사례입니다." data-es="Cómo los datos de un mismo paciente están fragmentados en 4 archivos Excel.">Cómo los datos de un paciente están fragmentados en 4 archivos.</p>
+  <div id="crossRefContainer"></div>
+  <div class="alert-box" style="margin-top:24px"><div class="alert-title">⚠ Inconsistencias en Nombres</div><div class="alert-text">NAYRA MENA ↔ MAYRA MENA ↔ NAYRA MENA RODRIGUEZ &nbsp;/&nbsp; AYLA MORENO CAMPOS ↔ AYLA MORENO. &nbsp;/&nbsp; URIEL CAMPO ↔ URIEL CAMPOS</div></div>
+</div>
+
+<footer class="dash-footer">Fundación Latidos · Heartitude × Data Analysis · Sep 2026</footer>
+
+<script>
+const surgeryData=[{no:1,date:'2021',name:'PROGRAMA DE CONTABILIDAD',monto:1316.88,ent:1316.88,pad:'ELYS',prov:'',note:'Programa'},{no:2,date:'2021',name:'Luis Salcedo, Pablo Vigil',monto:800,ent:800,pad:'ALESSIA',prov:'PANAMÁ CHORRERA',note:''},{no:3,date:'2023',name:'ANITA, LUIS, RAUL',monto:1122.94,ent:1112.94,pad:'EDGAR',prov:'Panamá, Colón',note:''},{no:4,date:'2023',name:'RAUL SOTO',monto:410,ent:410,pad:'EDGAR',prov:'COLÓN',note:''},{no:5,date:'2023',name:'ANA GARCIA',monto:450,ent:450,pad:'EDGAR',prov:'RIO ABAJO',note:''},{no:6,date:'2023',name:'LUIS SALCEDO',monto:262.94,ent:262.94,pad:'EDGAR',prov:'CHORRERA',note:''},{no:7,date:'2023',name:'IZAM BEJERANO',monto:499,ent:499,pad:'SOFI',prov:'VERAGUA',note:''},{no:8,date:'2024',name:'ISMAEL MURILLO',monto:100,ent:100,pad:'MIDDAN MITRE',prov:'COLÓN',note:''},{no:9,date:'2024',name:'YAIMISEL MIRANDA',monto:824.57,ent:824.57,pad:'EILEEN',prov:'COMARCA',note:''},{no:10,date:'2024',name:'NADIERIC ESTRADA',monto:360.87,ent:360.87,pad:'EVELYN',prov:'RIO HATO-COCLE',note:''},{no:11,date:'2024',name:'EMMANUEL BARBA',monto:837.83,ent:712.16,pad:'PAOLA',prov:'ARRAIJAN',note:''},{no:12,date:'2024',name:'ANTHONY PALOMINO',monto:763,ent:737.2,pad:'CHANTAL',prov:'LOS SANTOS',note:''},{no:13,date:'2024',name:'YACIEL MURILLO',monto:387,ent:387,pad:'CARO',prov:'ARRAIJAN',note:''},{no:14,date:'2024',name:'BRIANNA SERRANO',monto:300,ent:255,pad:'MONICA',prov:'CHIRIQUI',note:''},{no:15,date:'2024',name:'JAYDEN GUARDIA',monto:2105,ent:1789.25,pad:'SUYAPA',prov:'CHORRERA',note:''},{no:16,date:'2024/Nov',name:'MOISES PALACIOS',monto:654.4,ent:556.24,pad:'FANY',prov:'DAVID CHIRIQUI',note:''},{no:17,date:'2024',name:'EDGAR MORALES',monto:1225,ent:1041.25,pad:'EDGAR',prov:'PACORA',note:''},{no:18,date:'2024',name:'IZAM BEJERANO',monto:7163,ent:6088.55,pad:'SUYAPA',prov:'VERAGUAS',note:''},{no:19,date:'2025',name:'IVAN GONZALEZ',monto:1968.6,ent:1673.31,pad:'SANDRA',prov:'COLON',note:''},{no:20,date:'2025',name:'SCARLETT BUSTAMANTE',monto:144.4,ent:122.74,pad:'ELYS',prov:'RIO ABAJO',note:''},{no:21,date:'2025',name:'EITHAN BATISTA',monto:130,ent:110.5,pad:'MILITZA',prov:'MAÑANITAS',note:''},{no:22,date:'2025',name:'ABRAHAM JIMENEZ',monto:287.6,ent:244.46,pad:'SARAI',prov:'CERRO CAMA',note:''},{no:23,date:'2025/May',name:'ABRAHAM JIMENEZ',monto:400,ent:340,pad:'SARAI',prov:'CERRO CAMA',note:''},{no:'—',date:'2025/Abr',name:'HADASSAG GONZALEZ',monto:325,ent:275.8,pad:'VALE',prov:'TOCUMEN',note:''},{no:24,date:'2025/Abr',name:'IRVING ZURDO',monto:711.77,ent:605,pad:'SOFI',prov:'PACORA CARRIAZO',note:''},{no:25,date:'2025/Abr',name:'URIEL CAMPO',monto:10,ent:8.5,pad:'NAGGAI',prov:'CHITRE',note:''},{no:26,date:'2025/May',name:'ALIS CERRUD',monto:345,ent:293.25,pad:'AIBEEK',prov:'CHIRIQUI',note:''},{no:27,date:'2025/Jun',name:'YOHEL ABREGO',monto:473,ent:402.05,pad:'JUAN MANUEL',prov:'VERAGUA',note:''},{no:28,date:'2025/Ago',name:'ZAIR ARCIA',monto:659,ent:560.15,pad:'NICOLE PITACH',prov:'DARIEN',note:''},{no:29,date:'2025/Ago',name:'ZAID PINEDA',monto:1201.77,ent:1021.5,pad:'EDGAR ROJA',prov:'CHILIBRE',note:'FALLECIÓ'},{no:30,date:'2025/Sep',name:'ASHELY CONTRERA',monto:300,ent:255,pad:'PAOLA',prov:'NATA',note:''},{no:31,date:'2025/Sep',name:'URIEL CAMPOS',monto:735.66,ent:625.33,pad:'LAURA CANO',prov:'CHITRE',note:''},{no:32,date:'2025/Nov',name:'GIRA MEDICA',monto:2117,ent:1799.45,pad:'ELYS',prov:'CHIRIQUI',note:'Gira'},{no:33,date:'2025/Dic',name:'MIA CATALELLA JIMENEZ',monto:470,ent:399.5,pad:'CHANTAL',prov:'CERRO BATEA',note:''},{no:34,date:'2025/Dic',name:'GIRA MEDICA',monto:2117,ent:1549.45,pad:'MARIE',prov:'CHIRIQUI',note:'Gira'},{no:35,date:'2025/Dic',name:'LATIFF JOSEPH VALDES',monto:945,ent:803.25,pad:'MILITZA',prov:'CERRO BATEA',note:''},{no:36,date:'2026/Feb',name:'ALESSA MARTINEZ',monto:175,ent:148.75,pad:'ROMY',prov:'NUEVO EMPERADOR',note:''},{no:37,date:'2026/Feb',name:'ALESSA MARTINEZ',monto:1182.55,ent:1115.67,pad:'AURORA',prov:'NUEVO EMPERADOR',note:''},{no:38,date:'2026-02-13',name:'ALESSA MARTINEZ',monto:905,ent:769.25,pad:'ISA ALESSI',prov:'NUEVO EMPERADOR',note:''},{no:39,date:'2026-04-23',name:'ALESSA MARTINEZ',monto:268,ent:227.8,pad:'MARIMAR',prov:'NUEVO EMPERADOR',note:''},{no:40,date:'2026-04-15',name:'ELVIS MARTINEZ',monto:957,ent:813.45,pad:'ELVIS MARTINEZ',prov:'COLÓN',note:''},{no:41,date:'2026-03-01',name:'ABRAHAM JIMENEZ',monto:15270.11,ent:12979.59,pad:'JONATHAN',prov:'CERRO CAMA',note:''},{no:42,date:'2026-03-01',name:'ABRAHAM JIMENEZ',monto:11586,ent:9848.1,pad:'EDGAR',prov:'CERRO CAMA',note:''},{no:43,date:'2026-04-22',name:'LUCAS GONZALEZ',monto:835,ent:709.75,pad:'FRANK',prov:'PARQUE LEFEVRE',note:''},{no:44,date:'2026-05-01',name:'AYLA MORENO CAMPOS',monto:3404,ent:1681.39,pad:'VALERIA',prov:'VERAGUAS',note:''},{no:45,date:'2026-07-01',name:'AYLA MORENO CAMPOS',monto:5355,ent:4551.75,pad:'AYLA (NIÑA)',prov:'VERAGUAS',note:''},{no:46,date:'2026-06-25',name:'AYLA MORENO / RAUL SOTO',monto:665,ent:565.25,pad:'JESSICA ACETI',prov:'SANTIAGO',note:''},{no:47,date:'2026-07-02',name:'JESUS CENTENO',monto:664.74,ent:565.03,pad:'MARIANA',prov:'VERAGUA',note:''},{no:48,date:'—',name:'NO SE HIZO',monto:0,ent:0,pad:'DANIELA',prov:'',note:'Cancelado'},{no:49,date:'2026-07-02',name:'AYLA MORENO',monto:1962,ent:1667.7,pad:'LEONOR',prov:'VERAGUA',note:''},{no:50,date:'2026-07-02',name:'ELVIS MARTINEZ',monto:1422.5,ent:1209.12,pad:'JOE',prov:'COLÓN',note:''},{no:51,date:'2026-07-02',name:'ELISEBA ISMARE',monto:500,ent:425,pad:'JIYU',prov:'PACORA',note:''},{no:52,date:'2026-08-01',name:'ALEXA DOMINGUEZ',monto:687,ent:583.95,pad:'PEDRO',prov:'CHORRERA',note:''},{no:53,date:'2026-09-01',name:'JUAN RUDAS',monto:250,ent:null,pad:'NANCY',prov:'RIO HATO',note:''}];
+const mi=[{m:'ENE',pM:5,pF:7,wM:6,wF:7,lM:6,lF:7,t:38,nM:0,nF:3},{m:'FEB',pM:6,pF:9,wM:6,wF:9,lM:6,lF:9,t:45,nM:5,nF:6},{m:'MAR',pM:13,pF:18,wM:13,wF:18,lM:13,lF:19,t:94,nM:1,nF:3},{m:'ABR',pM:14,pF:7,wM:17,wF:7,lM:17,lF:10,t:72,nM:11,nF:9},{m:'MAY',pM:2,pF:5,wM:2,wF:6,lM:3,lF:7,t:25,nM:0,nF:1},{m:'JUN',pM:1,pF:4,wM:1,wF:4,lM:2,lF:5,t:17,nM:5,nF:2},{m:'JUL',pM:10,pF:6,wM:10,wF:7,lM:10,lF:8,t:51,nM:2,nF:2},{m:'AGO',pM:4,pF:8,wM:4,wF:8,lM:4,lF:8,t:36,nM:1,nF:0},{m:'SEP',pM:2,pF:4,wM:2,wF:4,lM:2,lF:4,t:18,nM:1,nF:0}];
+const cc=[{c:'Transporte',n:68,s:1822,cl:'#e8c96d'},{c:'Operaciones',n:32,s:606,cl:'#5d9de8'},{c:'Medicamentos',n:11,s:354,cl:'#e85d5d'},{c:'Mensajería',n:5,s:96,cl:'#a77de8'},{c:'Eventos',n:3,s:62,cl:'#5dccc8'},{c:'Alimentación',n:3,s:60,cl:'#5dcc8a'},{c:'Otros',n:57,s:1642,cl:'#4a5a78'}];
+const ct=[{n:'YARISUBEL GUARDIA',c:8},{n:'LISANDRA MARTINEZ',c:6},{n:'YULIBETH MARTINEZ',c:5},{n:'EDGAR ROJAS',c:5},{n:'LAILA ABREGO',c:4},{n:'SAUL RIVERA',c:4},{n:'NAYRA MENA',c:4},{n:'BRICET CHICHILIANO',c:4},{n:'NAYRA MENA RODRIGUEZ',c:4},{n:'MARIELA ABREGO',c:3}];
+const tp=[{n:'Alessa Martinez',a:'8 años',d:'Anillo Vascular',s:1,p:1},{n:'Zair Arias',a:'2 años',d:'CIV, Plastia de Arteria Pulmonar',s:1,p:0},{n:'Joelys Lizabeth Gonzalez',a:'2 años',d:'CIV, Plastia Pulmonar, Desnutrición, Paro Respiratorio',s:1,p:0},{n:'Dan Loami Chichiliano',a:'2 años',d:'Traqueo Gastro, Parálisis Bilateral, Malaria, Retraso Global',s:0,p:0},{n:'Lucas Gonzalez',a:'6 meses',d:'Drenaje Venoso Anómalo Infracardiaco',s:1,p:0},{n:'Jayden Guardia',a:'2 años',d:'Drenaje Venoso Anómalo (pend. traqueo) — Dr. Luis Morales',s:0,p:0},{n:'Edgar Morales',a:'5 años',d:'Estenosis Pulmonar, Bloqueo AV',s:0,p:0},{n:'Emily Machuca',a:'3 años',d:'CIV, Estenosis Pulmonar',s:0,p:0},{n:'Eliceba Ismare Chichiliano',a:'5 meses',d:'CIV, Comunicación Arterio Auricular, Down',s:0,p:0},{n:'Ayla Victoria Moreno Campos',a:'1 año',d:'CIV, DORV, Falla Cardíaca',s:1,p:0},{n:'Layla Selles Santos',a:'1 año',d:'Transposición de Grandes Vasos — Dra. Kenia Espinosa',s:0,p:0},{n:'Gabriel Carpintero',a:'3 meses',d:'DORV, CIA, CIV, DAP, Hipogonadismo',s:0,p:0}];
+const ep=[{n:'EDGAR MORALES',d:'Pacora',t:'6398-7346',m:'Tatiana Morales'},{n:'ARIEL CORRALES',d:'Los Santos',t:'6952-3732',m:'Mitzi Jaen'},{n:'RONAL MIRANDA',d:'Chorrera',t:'6941-8522',m:'Ruth Gonzalez'},{n:'LUIS ELIAN SAENZ',d:'Chitre',t:'6595-7254',m:'Elyani Gonzalez'},{n:'IRVIN ZURDO',d:'Carriazo',t:'6646-8255',m:'Irving Zurdo (padre)'}];
+const cr=[{name:'Alessa Martinez',items:[{src:'CCC',color:'var(--red)',text:'4 intervenciones, $2,530.55 (Feb–Abr 2026). Padrinos: Romy, Aurora, Isa Alessi, Marimar'},{src:'TRAQUEO',color:'var(--purple)',text:'Anillo Vascular. Succionador portátil asignado'},{src:'INSUMO',color:'var(--green)',text:'Lista 20 de septiembre. Madre: Mayra Mena (6708-7779)'},{src:'CAJA',color:'var(--blue)',text:'Madre Nayra/Mayra Mena: transporte 4+ veces (~$60)'}]},{name:'Abraham Jimenez',items:[{src:'CCC',color:'var(--red)',text:'Máximo monto: $26,856.11 en 2 intervenciones (Mar 2026). Padrinos: Jonathan, Edgar'},{src:'CAJA',color:'var(--blue)',text:'Madre Laila Abrego: transporte múltiples veces ($25–$40). Cerro Cama, Chorrera'}]},{name:'Jayden Guardia',items:[{src:'TRAQUEO',color:'var(--purple)',text:'2 años. Drenaje venoso anómalo operado, pendiente traqueotomía. Dr. Luis Morales'},{src:'CAJA',color:'var(--blue)',text:'Madre Yarisubel Guardia: TOP frecuencia (8 recibos). Transporte y medicamentos'}]}];
+
+function showTab(id,btn){document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));document.getElementById('tab-'+id).classList.add('active');btn.classList.add('active');}
+let currentLang='es';
+function setLang(l){currentLang=l;document.querySelectorAll('.lang-btn').forEach(b=>b.classList.remove('active'));document.querySelector(`.lang-btn[onclick="setLang('${l}')"]`).classList.add('active');document.querySelectorAll('.t').forEach(e=>{const t=e.getAttribute('data-'+l);if(t)e.innerHTML=t;});}
+
+Chart.defaults.color='#8a9bb8';Chart.defaults.borderColor='rgba(201,168,76,.12)';Chart.defaults.font.family="'Inter',sans-serif";Chart.defaults.font.size=11;
+const gp=['#e8c96d','#c9a84c','#5d9de8','#e85d5d','#5dcc8a','#a77de8','#5dccc8','#e8a55d','#cc5d8a'];
+
+new Chart(document.getElementById('chartYearCost'),{type:'bar',data:{labels:['2021','2023','2024','2025','2026'],datasets:[{label:'Monto ($)',data:[2117,2745,14721,13341,46889],backgroundColor:['rgba(201,168,76,.3)','rgba(201,168,76,.4)','rgba(201,168,76,.5)','rgba(201,168,76,.6)','rgba(232,201,109,.8)'],borderColor:'#e8c96d',borderWidth:1,borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{ticks:{callback:v=>'$'+v.toLocaleString()},grid:{color:'rgba(255,255,255,.04)'}},x:{grid:{display:false}}}}});
+
+new Chart(document.getElementById('chartMonthlySupplies'),{type:'bar',data:{labels:mi.map(m=>m.m),datasets:[{label:'Pañales',data:mi.map(m=>m.pM+m.pF),backgroundColor:'rgba(201,168,76,.7)',borderRadius:3},{label:'Toallitas',data:mi.map(m=>m.wM+m.wF),backgroundColor:'rgba(93,157,232,.6)',borderRadius:3},{label:'Leche',data:mi.map(m=>m.lM+m.lF),backgroundColor:'rgba(93,204,138,.6)',borderRadius:3}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12,padding:12}}},scales:{x:{stacked:true,grid:{display:false}},y:{stacked:true,grid:{color:'rgba(255,255,255,.04)'}}}}});
+
+new Chart(document.getElementById('chartCajaCategory'),{type:'doughnut',data:{labels:cc.map(c=>c.c),datasets:[{data:cc.map(c=>c.s),backgroundColor:cc.map(c=>c.cl),borderWidth:0,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'right',labels:{padding:10,boxWidth:10}}}}});
+
+new Chart(document.getElementById('chartNewCases'),{type:'line',data:{labels:mi.map(m=>m.m),datasets:[{label:'Niños',data:mi.map(m=>m.nM),borderColor:'#5d9de8',backgroundColor:'rgba(93,157,232,.15)',fill:true,tension:.4,pointRadius:4},{label:'Niñas',data:mi.map(m=>m.nF),borderColor:'#e85d9d',backgroundColor:'rgba(232,93,157,.15)',fill:true,tension:.4,pointRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12}}},scales:{y:{beginAtZero:true,grid:{color:'rgba(255,255,255,.04)'}},x:{grid:{display:false}}}}});
+
+new Chart(document.getElementById('chartSurgeryYear'),{type:'bar',data:{labels:['2021','2023','2024','2025','2026'],datasets:[{label:'Monto ($)',data:[2117,2745,14721,13341,46889],backgroundColor:'rgba(201,168,76,.5)',borderColor:'#e8c96d',borderWidth:1,borderRadius:4,yAxisID:'y'},{label:'Cantidad',data:[2,5,11,18,18],type:'line',borderColor:'#5dcc8a',fill:false,tension:.3,pointRadius:5,yAxisID:'y1'}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:12}}},scales:{y:{position:'left',ticks:{callback:v=>'$'+v.toLocaleString()},grid:{color:'rgba(255,255,255,.04)'}},y1:{position:'right',grid:{drawOnChartArea:false}},x:{grid:{display:false}}}}});
+
+const t10=[{n:'ABRAHAM JIMENEZ',v:26856},{n:'AYLA MORENO C.',v:11386},{n:'ALESSA MARTINEZ',v:2531},{n:'ELVIS MARTINEZ',v:2380},{n:'LUCAS GONZALEZ',v:835},{n:'IKER SANCHEZ (pend.)',v:800},{n:'ALEXA DOMINGUEZ',v:687},{n:'AYLA/RAUL SOTO',v:665},{n:'JESUS CENTENO',v:665},{n:'ELISEBA ISMARE',v:500}];
+new Chart(document.getElementById('chartTopPatients'),{type:'bar',data:{labels:t10.map(p=>p.n),datasets:[{data:t10.map(p=>p.v),backgroundColor:gp.map(c=>c+'bb'),borderWidth:0,borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>'$'+v.toLocaleString()},grid:{color:'rgba(255,255,255,.04)'}},y:{grid:{display:false}}}}});
+
+const sb=document.getElementById('surgeryBody');
+surgeryData.forEach(r=>{let nh='';if(r.note==='FALLECIÓ')nh='<span class="badge badge-red">FALLECIÓ</span>';else if(r.note==='Cancelado')nh='<span class="badge badge-red">NO SE HIZO</span>';else if(r.note==='Gira')nh='<span class="badge badge-purple">GIRA</span>';else if(r.note)nh='<span class="badge badge-blue">'+r.note+'</span>';const tr=document.createElement('tr');tr.innerHTML=`<td>${r.no}</td><td>${r.date}</td><td><strong>${r.name}</strong></td><td class="mono">${r.monto?'$'+r.monto.toLocaleString():''}</td><td class="mono">${r.ent!=null?'$'+r.ent.toLocaleString():'—'}</td><td>${r.pad}</td><td>${r.prov}</td><td>${nh}</td>`;sb.appendChild(tr);});
+
+new Chart(document.getElementById('chartSupplyDetail'),{type:'bar',data:{labels:mi.map(m=>m.m),datasets:[{label:'Pañales ♂',data:mi.map(m=>m.pM),backgroundColor:'rgba(93,157,232,.6)',stack:'p',borderRadius:2},{label:'Pañales ♀',data:mi.map(m=>m.pF),backgroundColor:'rgba(93,157,232,.3)',stack:'p',borderRadius:2},{label:'Toallitas ♂',data:mi.map(m=>m.wM),backgroundColor:'rgba(201,168,76,.6)',stack:'w',borderRadius:2},{label:'Toallitas ♀',data:mi.map(m=>m.wF),backgroundColor:'rgba(201,168,76,.3)',stack:'w',borderRadius:2},{label:'Leche ♂',data:mi.map(m=>m.lM),backgroundColor:'rgba(93,204,138,.6)',stack:'l',borderRadius:2},{label:'Leche ♀',data:mi.map(m=>m.lF),backgroundColor:'rgba(93,204,138,.3)',stack:'l',borderRadius:2}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top',labels:{boxWidth:10,padding:8,font:{size:10}}}},scales:{x:{grid:{display:false}},y:{grid:{color:'rgba(255,255,255,.04)'}}}}});
+
+new Chart(document.getElementById('chartGender'),{type:'doughnut',data:{labels:['Niños (♂) 181','Niñas (♀) 215'],datasets:[{data:[181,215],backgroundColor:['#5d9de8','#e85d9d'],borderWidth:0,hoverOffset:8}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:16}}}}});
+
+new Chart(document.getElementById('chartCajaDetail'),{type:'bar',data:{labels:cc.map(c=>c.c),datasets:[{label:'Monto ($)',data:cc.map(c=>c.s),backgroundColor:cc.map(c=>c.cl+'cc'),borderRadius:4}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{ticks:{callback:v=>'$'+v},grid:{color:'rgba(255,255,255,.04)'}},y:{grid:{display:false}}}}});
+
+new Chart(document.getElementById('chartCajaTop'),{type:'bar',data:{labels:ct.map(p=>p.n),datasets:[{data:ct.map(p=>p.c),backgroundColor:'rgba(201,168,76,.5)',borderRadius:3}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{color:'rgba(255,255,255,.04)'},ticks:{stepSize:1}},y:{grid:{display:false},ticks:{font:{size:10}}}}}});
+
+const tg=document.getElementById('traqueoGrid');
+tp.forEach((p,i)=>{const tags=['<span class="badge badge-gold">INSUMO</span>'];if(p.s)tags.push('<span class="badge badge-blue">SUCCIONADOR</span>');if(p.p)tags.push('<span class="badge badge-green">PORTÁTIL</span>');tg.innerHTML+=`<div class="patient-card"><div class="patient-name">${i+1}. ${p.n}</div><div class="patient-age">${p.a}</div><div class="patient-dx">${p.d}</div><div class="patient-tags">${tags.join('')}</div></div>`;});
+
+const eg=document.getElementById('encamadosGrid');
+ep.forEach(p=>{eg.innerHTML+=`<div class="patient-card"><div class="patient-name">${p.n}</div><div class="patient-age" style="color:var(--muted)">${p.d} · ${p.t}</div><div class="patient-dx">Madre/Padre: ${p.m}</div><div class="patient-tags"><span class="badge badge-red">ENCAMADO</span></div></div>`;});
+
+const crc=document.getElementById('crossRefContainer');
+cr.forEach(c=>{let items=c.items.map(it=>`<div class="cross-ref-item"><span class="cross-ref-src" style="background:${it.color}">${it.src}</span><span class="cross-ref-text">${it.text}</span></div>`).join('');crc.innerHTML+=`<div class="cross-ref-card"><div class="cross-ref-name">${c.name}</div>${items}</div>`;});
+</script>
+</body>
+</html>

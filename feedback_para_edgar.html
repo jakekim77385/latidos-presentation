@@ -1,0 +1,421 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Feedback para Edgar</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/><style>body{font-family:Inter,sans-serif;background:#0b1628;color:#f8f6f0;max-width:800px;margin:0 auto;padding:40px 32px;line-height:1.7}h1,h2,h3{color:#e8c96d;margin-top:32px}h1{font-size:1.8rem;border-bottom:1px solid rgba(201,168,76,.3);padding-bottom:12px}h2{font-size:1.3rem}h3{font-size:1.1rem;color:#c9a84c}table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.88rem}th{background:#162444;color:#e8c96d;padding:10px 14px;text-align:left;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase}td{padding:10px 14px;border-bottom:1px solid rgba(255,255,255,.06);color:#e8e4dc}tr:hover td{background:rgba(201,168,76,.04)}strong{color:#e8c96d}hr{border:none;border-top:1px solid rgba(201,168,76,.2);margin:28px 0}p{color:#8a9bb8}ol,ul{color:#8a9bb8;padding-left:24px}a{color:#5d9de8}blockquote{border-left:3px solid #c9a84c;margin:16px 0;padding:8px 16px;background:rgba(201,168,76,.04)}</style></head><body><h1>Fundación Latidos — Resumen de Requerimientos y Análisis de Datos</h1>
+<p><strong>Para:</strong> Edgar Rojas<br />
+<strong>De:</strong> Jake (Heartitude)<br />
+<strong>Fecha:</strong> Septiembre 2026</p>
+<hr />
+<p>Hola Edgar,</p>
+<p>Basándome en lo que nos comentaste sobre las necesidades de la plataforma, quise organizar todo y confirmar contigo que estamos en la misma página.</p>
+<p>Además, analizamos los 4 archivos Excel que nos compartiste — y encontramos cosas muy interesantes que te quiero mostrar.</p>
+<hr />
+<h2>1. Lo que entendimos de tus requerimientos</h2>
+<h3>Categorías de asistencia</h3>
+<p>Entendimos que necesitas que cada ayuda que Latidos da a un niño se clasifique en una de estas 6 categorías:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Categoría</th>
+<th style="text-align: left;">Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;"><strong>Medicamentos</strong></td>
+<td style="text-align: left;">Medicinas post-operatorias</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;"><strong>Exámenes Médicos</strong></td>
+<td style="text-align: left;">Ecocardiogramas, análisis</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;"><strong>Transporte</strong></td>
+<td style="text-align: left;">Pasaje de provincia a la capital</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><strong>Alojamiento</strong></td>
+<td style="text-align: left;">Estadía cerca del hospital</td>
+</tr>
+<tr>
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><strong>Insumos Médicos</strong></td>
+<td style="text-align: left;">Materiales de curación</td>
+</tr>
+<tr>
+<td style="text-align: left;">6</td>
+<td style="text-align: left;"><strong>Equipos Médicos</strong></td>
+<td style="text-align: left;">Succionadores portátiles</td>
+</tr>
+</tbody>
+</table>
+<p>Y <strong>aparte</strong> de estas 6, los insumos básicos que se entregan regularmente:
+- Pañales (Pampers)
+- Toallitas
+- Leche especial</p>
+<h3>"Cumple con Causa" (CCC)</h3>
+<p>Entendimos que cada campaña CCC necesita registrar:
+- <strong>Nombre del paciente</strong> (el niño beneficiado)
+- <strong>Nombre del organizador</strong> (la persona que celebra su cumpleaños)
+- <strong>Monto recaudado</strong>
+- <strong>Tipo de asistencia proporcionada</strong> (de las 6 categorías)</p>
+<h3>Casos nuevos vs. seguimiento</h3>
+<p>Cada niño debe estar clasificado como <strong>caso nuevo</strong> o <strong>caso de seguimiento</strong>.</p>
+<hr />
+<h2>2. Lo que encontramos en tus archivos Excel</h2>
+<p>Analizamos cada celda de los 4 archivos. Aquí te presentamos los números reales:</p>
+<h3>Cuadro de Niños Realizados CCC</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Dato</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Total de registros (No. 1–53)</td>
+<td style="text-align: left;">53</td>
+</tr>
+<tr>
+<td style="text-align: left;">Entradas que no son pacientes</td>
+<td style="text-align: left;">4 (programa contable, 2 giras médicas, 1 cancelado)</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Pacientes únicos atendidos</strong></td>
+<td style="text-align: left;"><strong>~40</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Total facturado</td>
+<td style="text-align: left;"><strong>$79,812.13</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Descuento 15% (convenio hospital)</td>
+<td style="text-align: left;">$9,123.19</td>
+</tr>
+<tr>
+<td style="text-align: left;">Total entregado a familias</td>
+<td style="text-align: left;"><strong>$68,292.43</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Pacientes con intervenciones múltiples:</strong>
+- Abraham Jimenez — 4 intervenciones, <strong>$26,856</strong> (el monto más alto)
+- Alessa Martinez — 4 intervenciones, $2,531
+- Ayla Moreno Campos — 4+ intervenciones, $11,386
+- Elvis Martinez — 2 intervenciones
+- Uriel Campo/s — 2 intervenciones</p>
+<h3>Insumos 2026 (Enero–Septiembre)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Insumo</th>
+<th style="text-align: center;">Niños (♂)</th>
+<th style="text-align: center;">Niñas (♀)</th>
+<th style="text-align: center;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Pañales</td>
+<td style="text-align: center;">57</td>
+<td style="text-align: center;">68</td>
+<td style="text-align: center;"><strong>125</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Toallitas</td>
+<td style="text-align: center;">61</td>
+<td style="text-align: center;">70</td>
+<td style="text-align: center;"><strong>131</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Leche Especial</td>
+<td style="text-align: center;">63</td>
+<td style="text-align: center;">77</td>
+<td style="text-align: center;"><strong>140</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Total entregas</strong></td>
+<td style="text-align: center;"><strong>181</strong></td>
+<td style="text-align: center;"><strong>215</strong></td>
+<td style="text-align: center;"><strong>396</strong></td>
+</tr>
+<tr>
+<td style="text-align: left;">Casos nuevos</td>
+<td style="text-align: center;">26</td>
+<td style="text-align: center;">26</td>
+<td style="text-align: center;"><strong>52</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Distribución mensual:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Mes</th>
+<th style="text-align: center;">Pañales</th>
+<th style="text-align: center;">Toallitas</th>
+<th style="text-align: center;">Leche</th>
+<th style="text-align: center;">Total</th>
+<th style="text-align: center;">Nuevos</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Enero</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">13</td>
+<td style="text-align: center;">38</td>
+<td style="text-align: center;">3</td>
+</tr>
+<tr>
+<td style="text-align: left;">Febrero</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">15</td>
+<td style="text-align: center;">45</td>
+<td style="text-align: center;">11</td>
+</tr>
+<tr>
+<td style="text-align: left;">Marzo</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">31</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">94</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Abril</td>
+<td style="text-align: center;">21</td>
+<td style="text-align: center;">24</td>
+<td style="text-align: center;">27</td>
+<td style="text-align: center;">72</td>
+<td style="text-align: center;">20</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mayo</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">8</td>
+<td style="text-align: center;">10</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Junio</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">7</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">7</td>
+</tr>
+<tr>
+<td style="text-align: left;">Julio</td>
+<td style="text-align: center;">16</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">51</td>
+<td style="text-align: center;">4</td>
+</tr>
+<tr>
+<td style="text-align: left;">Agosto</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">12</td>
+<td style="text-align: center;">36</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr>
+<td style="text-align: left;">Septiembre</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">6</td>
+<td style="text-align: center;">18</td>
+<td style="text-align: center;">1</td>
+</tr>
+</tbody>
+</table>
+<h3>Caja Menuda (Dic 2025–Sep 2026)</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Dato</th>
+<th style="text-align: left;">Valor</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">Fondo fijo</td>
+<td style="text-align: left;">$200.00</td>
+</tr>
+<tr>
+<td style="text-align: left;">Reembolsos realizados</td>
+<td style="text-align: left;">27</td>
+</tr>
+<tr>
+<td style="text-align: left;">Total de gastos</td>
+<td style="text-align: left;">179</td>
+</tr>
+<tr>
+<td style="text-align: left;"><strong>Monto total</strong></td>
+<td style="text-align: left;"><strong>$4,641.52</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Distribución por tipo de gasto:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Categoría</th>
+<th style="text-align: center;">Cantidad</th>
+<th style="text-align: center;">Monto</th>
+<th style="text-align: center;">%</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><strong>Transporte</strong></td>
+<td style="text-align: center;">68</td>
+<td style="text-align: center;">$1,822</td>
+<td style="text-align: center;">39.3%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Otros/sin clasificar</td>
+<td style="text-align: center;">57</td>
+<td style="text-align: center;">$1,642</td>
+<td style="text-align: center;">35.4%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Operaciones/oficina</td>
+<td style="text-align: center;">32</td>
+<td style="text-align: center;">$606</td>
+<td style="text-align: center;">13.1%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Medicamentos</td>
+<td style="text-align: center;">11</td>
+<td style="text-align: center;">$354</td>
+<td style="text-align: center;">7.6%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Mensajería</td>
+<td style="text-align: center;">5</td>
+<td style="text-align: center;">$96</td>
+<td style="text-align: center;">2.1%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Eventos</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">$62</td>
+<td style="text-align: center;">1.3%</td>
+</tr>
+<tr>
+<td style="text-align: left;">Alimentación</td>
+<td style="text-align: center;">3</td>
+<td style="text-align: center;">$60</td>
+<td style="text-align: center;">1.3%</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Top beneficiarios por frecuencia:</strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Acudiente</th>
+<th style="text-align: center;">Veces</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Yarisubel Guardia</td>
+<td style="text-align: center;">8</td>
+</tr>
+<tr>
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Lisandra Martinez</td>
+<td style="text-align: center;">6</td>
+</tr>
+<tr>
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Yulibeth Martinez</td>
+<td style="text-align: center;">5</td>
+</tr>
+<tr>
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Edgar Rojas</td>
+<td style="text-align: center;">5</td>
+</tr>
+</tbody>
+</table>
+<h3>Niños con Traqueotomía y Encamados</h3>
+<ul>
+<li><strong>12 niños con traqueotomía</strong> (5 con succionador asignado)</li>
+<li><strong>5 niños encamados</strong> (todos con datos de contacto completos)</li>
+<li><strong>Total cuidado crítico: 17 niños</strong></li>
+</ul>
+<hr />
+<h2>3. Problemas que encontramos en los archivos</h2>
+<h3>⚠️ Error de fórmula en el cuadro CCC</h3>
+<p>La fórmula <code>=SUM(G14:G57)</code> del archivo CCC <strong>no incluye las primeras 10 filas</strong> (No. 1 al 10). Esto hace que el total de "Entregado" aparezca como $62,155 cuando el valor real es <strong>$68,292</strong> — una diferencia de <strong>$6,137</strong> que no aparece en las estadísticas.</p>
+<h3>⚠️ Nombres inconsistentes</h3>
+<p>Encontramos que el mismo paciente aparece con nombres diferentes en distintos archivos:
+- <code>NAYRA MENA</code> ↔ <code>MAYRA MENA</code> ↔ <code>NAYRA MENA RODRIGUEZ</code>
+- <code>AYLA MORENO CAMPOS</code> ↔ <code>AYLA MORENO.</code> ↔ <code>AYLA MORENO Y RAUL SOTO</code>
+- <code>URIEL CAMPO</code> ↔ <code>URIEL CAMPOS</code></p>
+<p>Esto hace imposible rastrear automáticamente a un paciente entre archivos.</p>
+<h3>⚠️ Datos fragmentados</h3>
+<p>Para saber todo sobre un paciente (ej: Alessa Martinez), hay que buscar en los 4 archivos por separado:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">Archivo</th>
+<th style="text-align: left;">Información de Alessa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;">CCC</td>
+<td style="text-align: left;">4 cirugías, $2,530.55</td>
+</tr>
+<tr>
+<td style="text-align: left;">Traqueo</td>
+<td style="text-align: left;">Traqueotomía, succionador portátil</td>
+</tr>
+<tr>
+<td style="text-align: left;">Insumo</td>
+<td style="text-align: left;">Lista 20 de septiembre, madre: Mayra Mena</td>
+</tr>
+<tr>
+<td style="text-align: left;">Caja</td>
+<td style="text-align: left;">Madre recibió transporte 4+ veces</td>
+</tr>
+</tbody>
+</table>
+<p>Con la plataforma, toda esta información estaría <strong>en una sola pantalla</strong>.</p>
+<hr />
+<h2>4. Preguntas para confirmar</h2>
+<p>Edgar, necesito tu confirmación en estos puntos:</p>
+<ol>
+<li>
+<p><strong>¿Las 6 categorías de asistencia son correctas y completas?</strong> ¿Falta alguna?</p>
+</li>
+<li>
+<p><strong>¿Cada gasto de la Caja Menuda debe clasificarse en una de las 6 categorías?</strong> ¿O la Caja tiene sus propias categorías?</p>
+</li>
+<li>
+<p><strong>¿Los "Insumos Básicos" (pañales, toallitas, leche) se registran solo por cantidad, o también necesitas registrar el costo?</strong></p>
+</li>
+<li>
+<p><strong>¿Hay datos adicionales que necesitas rastrear por paciente?</strong> (Ej: diagnóstico, médico tratante, hospital, fechas de seguimiento)</p>
+</li>
+<li>
+<p><strong>¿La información de las columnas ocultas del archivo de Insumos (cartas al gobierno, cirugías por hospital, donaciones en la Casita) también debe estar en la plataforma?</strong></p>
+</li>
+</ol>
+<hr />
+<p>Cualquier duda me escribes. 🤝</p>
+<p><em>— Jake (Heartitude)</em></p></body></html>
